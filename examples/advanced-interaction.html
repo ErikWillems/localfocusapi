@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Advanded interaction</title>
+	<link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Open Sans', sans-serif;
+        color:#444;
+    }
+
+    h1,h2,h3,h4,h5,h6, .btn {
+        font-weight: 300;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    button.btn {
+        margin-right:2px;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container" style="text-align:center">
+    
+        <h1>Advanced Interaction</h1>
+        <p>Get full control of every chart</p>
+        <div class="well">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>Toggle items in legend</h4>
+                    <div class="legendbuttons"></div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Toggle items on horizontal axis</h4>
+                    <div class="horizontalaxisbuttons"></div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Transpose legend and horizontal axis</h4>
+                    <button id="transpose" class="btn btn-default">Do it!</button>
+                </div>
+                <div class="col-md-3">
+                    <h4>Randomize item colors</h4>
+                    <button id="changecolor" class="btn btn-default">Do it!</button>
+                </div>
+            </div>
+            
+        </div>
+        <iframe class="localfocusvisual" scrolling="no" frameborder="0" style="width:100%;height:500px;overflow:hidden" src="http://beta-dot-localfocus2.appspot.com/553a6909916ce?api=1"></iframe>    
+    </div>
+
+    <script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../localfocusapi.js"></script>
+
+    <script>
+        LocalFocusAPI.select('iframe').on('loaded',function(){
+            // Widget is loaded.
+            var widgetObject = this;
+
+            //Request for the widgets internal dataStore
+            this.getDataStore(function(DataStore){
+                // DataStore has been recieved. Now create buttons and attach handlers
+
+                var groups = DataStore.groups
+                items = DataStore.items;
+
+                function buttonClicked(item){
+                    return function(){
+                        // Button has been clicked, so toggle active
+                        var active = (item.active = !item.active);
+                        $(this)
+                            .toggleClass('btn-primary', active)
+                            .toggleClass('btn-default', !active);
+                        // Set DataStore back to widget
+                        widgetObject.setDataStore(DataStore);
+                    }
+                }
+
+                function getRandomColor(){
+                    var letters = '0123456789ABCDEF'.split('');
+                    var color = '#';
+                    for (var i = 0; i < 6; i++ ) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                // Build the interaction menu's
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+
+                    // Only create buttons for each item that is active
+                    // and is in legend or on horizontal axis
+                    if(item.active && (item.group === groups[0].key || item.group === groups[1].key)){
+                        var newButton = $('<button class="btn btn-primary btn-xs"></button>')
+                            .text(item.label)
+                            .click(buttonClicked(item));
+
+                        var menu = (item.group === groups[0].key)?'.legendbuttons':'.horizontalaxisbuttons';
+                        newButton.appendTo(menu);
+                    }                    
+                };
+
+                $('#changecolor').click(function(){
+                    for (var i = 0; i < items.length; i++) {
+                        items[i].color = getRandomColor();
+                    };
+                    widgetObject.setDataStore(DataStore);
+                });
+
+                // To transpose chart, swap first and second group
+                $('#transpose').click(function(){
+                    var tmp = groups[0];
+                    groups[0] = groups[1];
+                    groups[1] = tmp;
+                    widgetObject.setDataStore(DataStore);
+                });
+            });
+        });
+    </script>
+    <!-- End example -->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../libs/highlight/styles/github.css">
+    <script src="../libs/highlight/highlight.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+    <div class="container" style="margin-top:50px">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>Get full control of every chart by getting the chart's internal DataStore, manipulate it, and put it back! 
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top:50px">
+        <p><strong>Working example code</strong></p>
+        <div style="overflow:auto">
+            <pre>
+                <code class="html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+    &#x3C;head&#x3E;
+        &#x3C;meta charset=&#x22;utf-8&#x22;&#x3E;
+        &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22;&#x3E;
+        &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1&#x22;&#x3E;
+        &#x3C;title&#x3E;Advanded interaction&#x3C;/title&#x3E;
+        &#x3C;link href=&#x22;../libs/bootstrap/css/bootstrap.min.css&#x22; rel=&#x22;stylesheet&#x22;&#x3E;
+    &#x3C;/head&#x3E;
+    &#x3C;body&#x3E;
+        &#x3C;div class=&#x22;container&#x22; style=&#x22;text-align:center&#x22;&#x3E;
+            &#x3C;h1&#x3E;Advanced Interaction&#x3C;/h1&#x3E;
+            &#x3C;p&#x3E;Get full control of every chart&#x3C;/p&#x3E;
+            &#x3C;div class=&#x22;well&#x22;&#x3E;
+                &#x3C;div class=&#x22;row&#x22;&#x3E;
+                    &#x3C;div class=&#x22;col-md-3&#x22;&#x3E;
+                        &#x3C;h4&#x3E;Toggle items in legend&#x3C;/h4&#x3E;
+                        &#x3C;div class=&#x22;legendbuttons&#x22;&#x3E;&#x3C;/div&#x3E;
+                    &#x3C;/div&#x3E;
+                    &#x3C;div class=&#x22;col-md-3&#x22;&#x3E;
+                        &#x3C;h4&#x3E;Toggle items on horizontal axis&#x3C;/h4&#x3E;
+                        &#x3C;div class=&#x22;horizontalaxisbuttons&#x22;&#x3E;&#x3C;/div&#x3E;
+                    &#x3C;/div&#x3E;
+                    &#x3C;div class=&#x22;col-md-3&#x22;&#x3E;
+                        &#x3C;h4&#x3E;Transpose legend and horizontal axis&#x3C;/h4&#x3E;
+                        &#x3C;button id=&#x22;transpose&#x22; class=&#x22;btn btn-default&#x22;&#x3E;Do it!&#x3C;/button&#x3E;
+                    &#x3C;/div&#x3E;
+                    &#x3C;div class=&#x22;col-md-3&#x22;&#x3E;
+                        &#x3C;h4&#x3E;Randomize item colors&#x3C;/h4&#x3E;
+                        &#x3C;button id=&#x22;changecolor&#x22; class=&#x22;btn btn-default&#x22;&#x3E;Do it!&#x3C;/button&#x3E;
+                    &#x3C;/div&#x3E;
+                &#x3C;/div&#x3E;    
+            &#x3C;/div&#x3E;
+            &#x3C;iframe class=&#x22;localfocusvisual&#x22; scrolling=&#x22;no&#x22; frameborder=&#x22;0&#x22; style=&#x22;width:100%;height:500px;overflow:hidden&#x22; src=&#x22;http://beta-dot-localfocus2.appspot.com/553a6909916ce?api=1&#x22;&#x3E;&#x3C;/iframe&#x3E;    
+        &#x3C;/div&#x3E;
+        &#x3C;script src=&#x22;../libs/jquery/jquery-1.11.2.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+        &#x3C;script src=&#x22;../libs/bootstrap/js/bootstrap.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+        &#x3C;script src=&#x22;../localfocusapi.js&#x22;&#x3E;&#x3C;/script&#x3E;
+        &#x3C;script&#x3E;
+            LocalFocusAPI.select(&#x27;iframe&#x27;).on(&#x27;loaded&#x27;,function(){
+                // Widget is loaded.
+                var widgetObject = this;
+
+                //Request for the widgets internal dataStore
+                this.getDataStore(function(DataStore){
+                    // DataStore has been recieved. Now create buttons and attach handlers
+
+                    var groups = DataStore.groups
+                    items = DataStore.items;
+
+                    function buttonClicked(item){
+                        return function(){
+                            // Button has been clicked, so toggle active
+                            var active = (item.active = !item.active);
+                            $(this)
+                                .toggleClass(&#x27;btn-primary&#x27;, active)
+                                .toggleClass(&#x27;btn-default&#x27;, !active);
+                            // Set DataStore back to widget
+                            widgetObject.setDataStore(DataStore);
+                        }
+                    }
+
+                    function getRandomColor(){
+                        var letters = &#x27;0123456789ABCDEF&#x27;.split(&#x27;&#x27;);
+                        var color = &#x27;#&#x27;;
+                        for (var i = 0; i &#x3C; 6; i++ ) {
+                            color += letters[Math.floor(Math.random() * 16)];
+                        }
+                        return color;
+                    }
+
+                    // Build the interaction menu&#x27;s
+                    for (var i = 0; i &#x3C; items.length; i++) {
+                        var item = items[i];
+
+                        // Only create buttons for each item that is active
+                        // and is in legend or on horizontal axis
+                        if(item.active &#x26;&#x26; (item.group === groups[0].key || item.group === groups[1].key)){
+                            var newButton = $(&#x27;&#x3C;button class=&#x22;btn btn-primary btn-xs&#x22;&#x3E;&#x3C;/button&#x3E;&#x27;)
+                                .text(item.label)
+                                .click(buttonClicked(item));
+
+                            var menu = (item.group === groups[0].key)?&#x27;.legendbuttons&#x27;:&#x27;.horizontalaxisbuttons&#x27;;
+                            newButton.appendTo(menu);
+                        }                    
+                    };
+
+                    $(&#x27;#changecolor&#x27;).click(function(){
+                        for (var i = 0; i &#x3C; items.length; i++) {
+                            items[i].color = getRandomColor();
+                        };
+                        widgetObject.setDataStore(DataStore);
+                    });
+
+                    // To transpose chart, swap first and second group
+                    $(&#x27;#transpose&#x27;).click(function(){
+                        var tmp = groups[0];
+                        groups[0] = groups[1];
+                        groups[1] = tmp;
+                        widgetObject.setDataStore(DataStore);
+                    });
+                });
+            });
+        &#x3C;/script&#x3E;
+    &#x3C;/body&#x3E;
+&#x3C;/html&#x3E;
+                </code>
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
