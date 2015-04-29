@@ -392,14 +392,14 @@ widgetObject.resume();
         </table>
 
         <br/><br/><br/><br/>
-        <h4 id="DataStore">A DataStore Object</h4>
+        <h3 id="DataStore">A DataStore Object</h3>
         <p>Each widget has an internal <code>DataStore</code>. Widgets respond to changes in this DataStore. Use <code>widgetObject.getDataStore(<i>callback</i>)</code> and <code>widgetObject.setDataStore(<i>DataStore</i>)</code> to get and set DataStores.</p>
         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-flag"></span> The DataStore can be complex and not all properties are usefull. This is just a short list of the most usefull properties, which are also safe for you to manipulate.</div>
         <table class="table">
             <tbody>
                 <tr>
                     <td>
-                        <p><code>DataStore.groups</code></p>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.groups</h4>
                         <p>This is an array of objects. It represents the dataset dimensions.<p>
                         <p>It is safe and sometimes usefull to change array order. The order defines how each dimension is used in a chart. For example, the first group (<code>DataStore.groups[0]</code>) is the legend in column charts and line charts.</p>
 
@@ -427,7 +427,7 @@ DataStore.groups[1] = tmp;
 
                 <tr>
                     <td>
-                        <p><code>DataStore.items</code></p>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.items</h4>
                         <p>This is an array of objects. It represents the dataset items. Each item belongs to a group.</p>
 
                         <p><strong>Read-only properties:</strong></p>
@@ -461,7 +461,7 @@ DataStore.items[0].color = &#x22;#444&#x22;;
 
                 <tr>
                     <td>
-                        <p><code>DataStore.settings</code></p>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.settings</h4>
                         <p>This is an objects. It holds various settings.</p>
 
                         <p><strong>Writable properties:</strong></p>
