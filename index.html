@@ -346,6 +346,28 @@ widgetObject.on(&#x27;loaded&#x27;,function(){
 
                 <tr>
                     <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.element()</h4>
+                        <p>Get the iframe element.</p>
+                        <p><strong>Arguments</strong></p>
+                        <p>None</p>
+                        <p><strong>Returns</strong></p>
+                        <p>iframe element</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Get the iframe element
+widgetObject.element();
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.wait()</h4>
                         <p>Stop repainting the chart. This is usefull when you want to manipulate things without repainting the chart.</p>
                         <p><strong>Arguments</strong></p>
