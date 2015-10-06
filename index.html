@@ -42,13 +42,16 @@
 <body>
     <div class="container" style="text-align:center">
         <h1 style="margin:70px 0px"><img src="images/lf.png" style="width:32px;height:32px;margin-right:10px" /> LocalFocus Widget API</h1>
-        <h4>Do cool stuff with LocalFocus Widgets!</h4>
-        <p>Your co-workers add datasets to LocalFocus, create charts and embed these on your company's website. Great!<br/>But you know <a href="http://www.w3schools.com/js/" target="_blank">javascript</a> and want to interact with these charts on your webpages.</p>
+        <h4>Interact with LocalFocus widgets on your site</h4>
+        <p>Build dashboards, change layouts, adjust maps and charts to user's geolocation. And more.</p>
         <br/>
         <a class="btn btn-default" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a>
         <a class="btn btn-default" href="https://github.com/ErikWillems/localfocusapi" target="_blank" role="button"><span class="glyphicon glyphicon-triangle-right"></span> Source on Github</a>
         <br/><br/>
-        <p>Version 0.2</p>
+        <p>Version 0.3</p>
+        <br/><br/>
+        <p><small>Optional geolocation modules, to use with LocalFocusAPI.geo()</small></p>
+        <a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a>
     </div>
 
     <br/><br/>
@@ -68,9 +71,8 @@
                 <a href="examples/change-style.html" target="_blank"><img src="images/example3.png" class="img-responsive img-thumbnail" /></a>
             </div>
             <div class="col-md-3">
-                <h4>Adapt charts to geolocation</h4>
-                <a href="http://www.localfocus.nl/concepts/locations/" target="_blank"><img src="images/example4.png" class="img-responsive img-thumbnail" /></a>
-                <small class="text-muted">Code example coming soon</small>
+                <h4>Adapting to geolocation</h4>
+                <a href="examples/geomodule.html" target="_blank"><img src="images/example5.png" class="img-responsive img-thumbnail" /></a>
             </div>
         </div>
         <br/><br/><br/><br/>
@@ -84,7 +86,7 @@
         <br/>
         <p><strong>Getting started</strong></p>
         <ul>
-            <li><a href="localfocusapi.js" target="_blank"><span class="glyphicon glyphicon-download"></span> Download the latest localfocusapi.js</a></li>
+            <li>Download the latest <a class="btn btn-default btn-xs" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a></li>
             <li>Include the script in your webpage:
                 <pre>
                     <code class="html">
@@ -112,14 +114,9 @@
         <br/>
         <p><strong>Dashboards</strong></p>
         <p>
-            You can use the API only on regular widgets and on Story Boards. Interacting with Dashboards is not yet possible.
+            You can use the API only on regular widgets and on Story Boards. Interacting with Dashboards and Newsmaps is not yet possible.
         </p>
         <br/><br/><br/><br/>
-
-        
-        
-
-
 
         <h2>In depth</h2><br/>
         <h3>Link parameters</h3>
@@ -159,12 +156,12 @@
                     <td>
                         <pre>
                             <code class="javascript">
-// Select first iframe and activate "2015"
-LocalFocusAPI.select(&#x22;iframe&#x22;).activate(&#x22;2015&#x22;);
+// Select first iframe and activate '2015'
+LocalFocusAPI.select('iframe').activate('2015');
 
-// Select by iframe element and activate "2015"
-var element = document.getElementById(&#x22;#mywidget&#x22;);
-LocalFocusAPI.select(element).activate(&#x22;2015&#x22;);
+// Select by iframe element and activate '2015'
+var element = document.getElementById('#mywidget');
+LocalFocusAPI.select(element).activate('2015');
                             </code>
                         </pre>
                     </td>
@@ -173,7 +170,7 @@ LocalFocusAPI.select(element).activate(&#x22;2015&#x22;);
                 <tr>
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.selectAll(<i>selector</i>,<i>handler</i>)</h4>
-                        <p>Select multiple widgets that you want to control. .</p>
+                        <p>Select multiple widgets that you want to control.</p>
                         <p><strong>Arguments</strong></p>
                         <ul>
                             <li><i>selector</i>: string. Containing one or more CSS selectors separated by commas.</li>
@@ -188,6 +185,48 @@ LocalFocusAPI.select(element).activate(&#x22;2015&#x22;);
                             <code class="javascript">
 LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
     this.activate(label);
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.geo(<i>settings</i>)</h4>
+                        <p class="text-danger">Only in the beta version of LocalFocus</p>
+                        <p>Select multiple widgets that you want to adjust to geolocation. The optional infoBox informs visitors about why they are asked for their location.</p>
+                        <p>You must include one or more geo-modules before you can use this function.</p>
+                        <p><a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a></p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li>
+                                <i>settings</i>: object. Containing one or more CSS selectors separated by commas. Properties:<br/>
+                                <ul>
+                                    <li><i>selector</i>: string. CSS selectors for selecting widgets that you want to geolocate.</li>
+                                    <li><i>infoBox-place</i>: string (optional).  The infobox will be placed inside this element as first child.</li>
+                                    <li><i>infoBox-node</i>: string (optional). Infobox node type.</li>
+                                    <li><i>infoBox-class</i>: string (optional). Infobox classes.</li>
+                                    <li><i>infoBox-text</i>: string (optional). Infobox text.</li>
+                                    <li><i>infoBox-html</i>: string (optional). Infobox html.</li>
+                                    <li><i>infoBox-slideUp</i>: boolean (optional). Use jQuery to slideUp infobox when hiding.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>Returns</strong></p>
+                        <p>Null</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+LocalFocusAPI.geo({
+    'selector': '.localfocusvisual',
+    'infoBox-place': '#main-article',
+    'infoBox-node': 'p',
+    'infoBox-class': 'alert alert-warning',
+    'infoBox-text': 'We ask for your location to adapt charts.',
+    'infoBox-slideUp': true
 });
                             </code>
                         </pre>

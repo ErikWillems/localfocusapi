@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adapting to geolocation</title>
+	<link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Open Sans', sans-serif;
+        color:#444;
+    }
+
+    h1,h2,h3,h4,h5,h6, .btn {
+        font-weight: 300;
+        font-family: 'Open Sans', sans-serif;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align:center">
+            <h1>Adapting to geolocation</h1>
+            <p>Adapt widgets to users location using <code>LocalFocusAPI.geo()</code></p>
+        </div>
+        <br/>
+        <h2>Example article</h2>
+        <div class="article">
+            <p>Some dummy text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum enim tempus sem viverra, non egestas nisl auctor. Suspendisse eros orci, aliquet mollis suscipit a, ultricies vel ipsum. Sed rutrum blandit odio, in vulputate nisi laoreet suscipit. Etiam nec ornare turpis, a euismod urna. Aenean nibh leo, tempus nec ornare ac, pellentesque eget mauris.</p>
+            <p>Praesent condimentum neque in tortor porta fermentum. Aliquam malesuada neque in erat malesuada, id porttitor lorem porta. Phasellus eget orci vitae justo pretium ullamcorper in in ipsum. Donec faucibus elit non turpis interdum finibus.</p>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <iframe class="localfocusvisual geo" scrolling="no" frameborder="0" height="550" width="100%" style="width:100%;height:550px;overflow:hidden" src="https://beta-dot-localfocus2.appspot.com/5613e723b4e8e?api=1"></iframe>
+            </div>
+            <div class="col-md-6">
+                <iframe class="localfocusvisual geo" scrolling="no" frameborder="0" height="550" width="100%" style="width:100%;height:550px;overflow:hidden" src="https://beta-dot-localfocus2.appspot.com/5613e6fc48070?api=1"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="../localfocusapi.js"></script>
+    <script src="../geo/geo-nl.js"></script>
+
+    <script>
+        $(function(){ // DOM is ready
+            LocalFocusAPI.geo({
+                'selector': '.localfocusvisual.geo',
+                'infoBox-place': '.article',
+                'infoBox-node': 'p',
+                'infoBox-class': 'alert alert-warning',
+                'infoBox-text': 'Maps adjust to your current location. It\'s possible that you are asked for your location.',
+                'infoBox-slideUp': true
+            });
+        });
+    </script>
+    <!-- End example -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../libs/highlight/styles/github.css">
+    <script src="../libs/highlight/highlight.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+    
+
+    <div class="container" style="margin-top:50px">
+        <p><strong>Working example code</strong></p>
+        <div style="overflow:auto">
+            <pre>
+                <code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;Geo modules&lt;/title&gt;
+        &lt;link href=&quot;../libs/bootstrap/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;h1 style=&quot;text-align:center&quot;&gt;Using geo modules&lt;/h1&gt;
+            &lt;br/&gt;
+            &lt;h2&gt;Example article&lt;/h2&gt;
+            &lt;div class=&quot;article&quot;&gt;
+                &lt;p&gt; Some dummy text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum enim tempus sem viverra, non egestas nisl auctor. Suspendisse eros orci, aliquet mollis suscipit a, ultricies vel ipsum. Sed rutrum blandit odio, in vulputate nisi laoreet suscipit. Etiam nec ornare turpis, a euismod urna. Aenean nibh leo, tempus nec ornare ac, pellentesque eget mauris.&lt;/p&gt;
+                &lt;p&gt;Praesent condimentum neque in tortor porta fermentum. Aliquam malesuada neque in erat malesuada, id porttitor lorem porta. Phasellus eget orci vitae justo pretium ullamcorper in in ipsum. Donec faucibus elit non turpis interdum finibus.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;div class=&quot;col-md-6&quot;&gt;
+                    &lt;iframe class=&quot;localfocusvisual geo&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; height=&quot;550&quot; width=&quot;100%&quot; style=&quot;width:100%;height:550px;overflow:hidden&quot; src=&quot;https://beta-dot-localfocus2.appspot.com/5613e723b4e8e?api=1&quot;&gt;&lt;/iframe&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;col-md-6&quot;&gt;
+                    &lt;iframe class=&quot;localfocusvisual geo&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; height=&quot;550&quot; width=&quot;100%&quot; style=&quot;width:100%;height:550px;overflow:hidden&quot; src=&quot;https://beta-dot-localfocus2.appspot.com/5613e6fc48070?api=1&quot;&gt;&lt;/iframe&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+
+        &lt;script src=&quot;../libs/jquery/jquery-1.11.2.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;../libs/bootstrap/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+
+        &lt;!-- Include LocalFocus API scripts --&gt;
+        &lt;script src=&quot;../localfocusapi.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;../geo/geo-nl.js&quot;&gt;&lt;/script&gt;
+
+        &lt;script&gt;
+            $(function(){ // DOM is ready
+                LocalFocusAPI.geo({
+                    'selector': '.localfocusvisual.geo',
+                    'infoBox-place': '.article',
+                    'infoBox-node': 'p',
+                    'infoBox-class': 'alert alert-warning',
+                    'infoBox-text': 'Maps adjust to your current location. It\'s possible that you are asked for your location.',
+                    'infoBox-slideUp': true
+                });
+            });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                </code>
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
