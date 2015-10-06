@@ -77,10 +77,34 @@
         hljs.initHighlightingOnLoad();
     </script>
     
-    
+    <div class="container" style="margin-top:50px">
+        <p><strong>Short code example</strong></p>
+        <div style="overflow:auto">
+            <pre>
+                <code class="html">
+&lt;!-- Include LocalFocus API scripts --&gt;
+&lt;script src=&quot;../localfocusapi.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../geo/geo-nl.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+    $(function(){ // DOM is ready
+        LocalFocusAPI.geo({
+            'selector': '.localfocusvisual.geo', // Select all widgets with class localfocusvisual and geo
+            'infoBox-place': '.article', // Add an infobox to the article element
+            'infoBox-node': 'p', // Infobox is a paragraph
+            'infoBox-class': 'alert alert-warning', // Add classes to infobox
+            'infoBox-text': 'Maps adjust to your current location. It\'s possible that you are asked for your location.', // Set text
+            'infoBox-slideUp': true // Use jQuery's slideUp
+        });
+    });
+&lt;/script&gt;
+                </code>
+            </pre>
+        </div>
+    </div>
 
     <div class="container" style="margin-top:50px">
-        <p><strong>Working example code</strong></p>
+        <p><strong>Full code example</strong></p>
         <div style="overflow:auto">
             <pre>
                 <code class="html">
