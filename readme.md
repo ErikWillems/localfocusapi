@@ -1,8 +1,7 @@
 # LocalFocus Widget API
 
-## Do cool stuff with LocalFocus Widgets!
+## Interact with LocalFocus widgets on your site
 
-Your co-workers add datasets to LocalFocus, create charts and embed these on your companies website. Great!
-But you know javascript and want to interact with these charts on your webpages.
+Build dashboards, change layouts, adjust maps and charts to user's geolocation. And more.
 
-Visit [developers.localfocus.nl](http://developers.localfocus.nl) for the documentation.
+Visit [developers.localfocus.nl](http://developers.localfocus.nl) for the documentation and examples.
