@@ -30,14 +30,13 @@
     <div class="container">
         <div style="text-align:center">
             <h1>Adapting to geolocation</h1>
-            <p>Adapt widgets to a visitor's location using <code>LocalFocusAPI.geo()</code></p>
+            <p class="text-danger">Right now only available in the beta version of LocalFocus</p>
+            <p>Adjust widgets to a user's geolocation using <code>LocalFocusAPI.geo()</code>. This function uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation" target="_blank">HTML5 Geolocation</a> to get coordinates and a LocalFocusAPI geo-module to convert these coordinates to locations. With the optional infoBox you can inform visitors about why they are asked for their geolocation. You must include one or more geo-modules before you can use this function.</p>
+            <p>Please visit the <a href="../#geo">documentation</a> for more code details</p>
         </div>
         <br/>
         <h2>Example article</h2>
-        <div class="article">
-            <p>Some dummy text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum enim tempus sem viverra, non egestas nisl auctor. Suspendisse eros orci, aliquet mollis suscipit a, ultricies vel ipsum. Sed rutrum blandit odio, in vulputate nisi laoreet suscipit. Etiam nec ornare turpis, a euismod urna. Aenean nibh leo, tempus nec ornare ac, pellentesque eget mauris.</p>
-            <p>Praesent condimentum neque in tortor porta fermentum. Aliquam malesuada neque in erat malesuada, id porttitor lorem porta. Phasellus eget orci vitae justo pretium ullamcorper in in ipsum. Donec faucibus elit non turpis interdum finibus.</p>
-        </div>
+        <div class="article"></div>
         <br/>
         <div class="row">
             <div class="col-md-6">
@@ -94,7 +93,7 @@
             'infoBox-node': 'p', // Infobox is a paragraph
             'infoBox-class': 'alert alert-warning', // Add classes to infobox
             'infoBox-text': 'Maps adjust to your current location. It\'s possible that you are asked for your location.', // Set text
-            'infoBox-slideUp': true // Use jQuery's slideUp
+            'infoBox-slideUp': true // Use jQuery's slideUp to hide infoBox when geolocation is detected
         });
     });
 &lt;/script&gt;

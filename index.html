@@ -191,11 +191,11 @@ LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
                     </td>
                 </tr>
 
-                <tr>
+                <tr id="geo">
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.geo(<i>settings</i>)</h4>
-                        <p class="text-danger">Only in the beta version of LocalFocus</p>
-                        <p>Select multiple widgets that you want to adjust to geolocation. The optional infoBox informs visitors about why they are asked for their location.</p>
+                        <p class="text-danger">Right now only available in the beta version of LocalFocus</p>
+                        <p>Adjust widgets to a user's geolocation. This function uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation" target="_blank">HTML5 Geolocation</a> to get coordinates and a LocalFocusAPI geo-module to convert these coordinates to locations. With the optional infoBox you can inform visitors about why they are asked for their geolocation.</p>
                         <p>You must include one or more geo-modules before you can use this function.</p>
                         <p><a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a></p>
                         <p><strong>Arguments</strong></p>
@@ -209,7 +209,7 @@ LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
                                     <li><i>infoBox-class</i>: string (optional). Infobox classes.</li>
                                     <li><i>infoBox-text</i>: string (optional). Infobox text.</li>
                                     <li><i>infoBox-html</i>: string (optional). Infobox html.</li>
-                                    <li><i>infoBox-slideUp</i>: boolean (optional). Use jQuery to slideUp infobox when hiding.</li>
+                                    <li><i>infoBox-slideUp</i>: boolean (optional). Use jQuery's slideUp to hide infoBox when geolocation is detected.</li>
                                 </ul>
                             </li>
                         </ul>

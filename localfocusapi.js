@@ -44,10 +44,10 @@ var LocalFocusAPI = (function(){
 
         var send = function(request){
             var message = {
-                type:'LocalFocusAPI',
-                request:request
+                type: 'LocalFocusAPI',
+                request: request
             };
-            element.contentWindow.postMessage( JSON.stringify(message),"*");
+            element.contentWindow.postMessage(JSON.stringify(message),"*");
         }
 
         var noop = function(){
@@ -184,9 +184,9 @@ var LocalFocusAPI = (function(){
         selectAll: function(d, loop){
             if(!oldBrowser){
                 var elems = document.querySelectorAll(d);
-                for (var i = 0; i < elems.length; i++) {
-                    loop.call(new widgetObject(elems[i]));
-                };
+                forEach(elems, function(elem){
+                    loop.call(new widgetObject(elem));
+                });
             }
             return null;
         },
