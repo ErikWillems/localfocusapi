@@ -1,6 +1,6 @@
 # LocalFocus Widget API
 
-## Interact with LocalFocus widgets on your site
+### Interact with LocalFocus widgets on your site
 
 Build dashboards, change layouts, adjust maps and charts to user's geolocation. And more.
 
