@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Newsmap demo</title>
+	<link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Roboto', sans-serif;
+        color:#444;
+    }
+
+    h1 {
+        font-size: 2em;
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="container" style="position:relative">
+        <div style="text-align:center">
+            <h1>Newsmap demo</h1>
+            <h2><span>Loading...</span></h2>
+            <p></p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <iframe class="localfocusvisual" frameborder="0" style="width:100%;height:450px;overflow:hidden" src="https://localfocus2.appspot.com/56b1d13990d15?api=1"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="../localfocusapi.js"></script>
+    <script>
+
+    
+    $(function(){
+        var success = false;
+        // Get a widgetObject
+        var widgetObject = LocalFocusAPI.select("iframe");
+
+        // Wait for a widget to be loaded
+        widgetObject.on('loaded',function(){
+            $('h2 span').text('Rendering...');
+            // Wait for widget to be ready
+            widgetObject.on('ready',function(){
+                $('h2 span').html('Ready!');
+                widgetObject.getDataStore(function(DataStore){
+                    // Show me the DataStore ad count all element groups in this map
+                    var count;
+                    if(!isObject(DataStore) || !isObject(DataStore.settings) || !isArray(DataStore.settings.points)){
+                        return;
+                    }
+                    $('p').text('This map contains ' + DataStore.settings.points.length + ' element groups');
+
+                    setTimeout(function(){
+                        // Remove first marker
+                        DataStore.settings.points.shift();
+                        widgetObject.setDataStore(DataStore);
+                        $('h2 span').html('Test: removed one map marker.  <a href="./newsmap-demo.html">Do it again</a>');
+                        $('p').text('This map contains ' + DataStore.settings.points.length + ' element groups');
+                        success = true;
+                    }, 2000);
+                });
+            });
+        });
+
+        setTimeout(function(){
+            if(success !== true){
+                $('h2 span').text('Widget API failed! Could not connect to widget.');
+            }
+        }, 10000);
+
+        var isObject = function(a){
+            return (typeof a !== 'undefined' && Object.prototype.toString.call( a ) === '[object Object]');
+        };
+
+        var isArray = function(a){
+            return (typeof a !== 'undefined' &&  Object.prototype.toString.call( a ) === '[object Array]');
+        };
+    });
+    </script>
+    <!-- End example -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+</body>
+</html>

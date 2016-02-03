@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adapting to geolocation</title>
+	<link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Roboto', sans-serif;
+        color:#444;
+    }
+
+    h1 {
+        font-size: 2em;
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h1 img {
+        height: 1.2em;
+        width: auto;
+        margin-right: 0.5em;
+    }
+
+    
+    </style>
+</head>
+<body>
+    <div class="container" style="position:relative">
+        <div style="text-align:center">
+            <h1><img src="../images/animals/cat.png" /> Missing Animals</h1>
+        </div>
+        <div style="height:4em;position:relative;z-index:1">
+            <div class="article"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <iframe class="localfocusvisual geo" frameborder="0" style="width:100%;height:500px;overflow:hidden" src="https://localfocus2.appspot.com/56333557bdcd9?api=1&dashboard=master"></iframe>
+            </div>
+            <div class="col-md-6">
+                <iframe class="localfocusvisual geo" frameborder="0" style="width:100%;height:500px;overflow:hidden" src="https://localfocus2.appspot.com/56333525c67a9?api=1&dashboard=slave"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="../localfocusapi.js"></script>
+    <script src="../geo/geo-nl.js"></script>
+    <script>
+    $(function(){
+        LocalFocusAPI.geo({
+            'selector': '.localfocusvisual.geo',
+            'infoBox-place': '.article',
+            'infoBox-node': 'p',
+            'infoBox-class': 'alert alert-warning',
+            'infoBox-text': 'Maps adjust to your current location. It\'s possible that you are asked for your location.',
+            'infoBox-slideUp': true
+        });
+    });
+    </script>
+    <!-- End example -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+</body>
+</html>
