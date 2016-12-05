@@ -48,7 +48,7 @@
         <a class="btn btn-default" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a>
         <a class="btn btn-default" href="https://github.com/ErikWillems/localfocusapi" target="_blank" role="button"><span class="glyphicon glyphicon-triangle-right"></span> Source on Github</a>
         <br/><br/>
-        <p>Version 0.3</p>
+        <p>Version 1.0</p>
         <br/><br/>
         <p><small>Optional geolocation modules, to use with LocalFocusAPI.geo()</small></p>
         <a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a>
@@ -141,8 +141,8 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <td><code>api=1</code></td>
-                    <td><strong>(required)</strong> It forces the widget to listen to API commands.</td>
+                    <td><code>api=1</code> <strong>(required! This activates the Widget API)</strong></td>
+                    <td>It forces the widget to listen to API commands.</td>
                 </tr>
                 <tr>
                     <td><code>noui=1</code></td>
@@ -151,6 +151,14 @@
                 <tr>
                     <td><code>wait=1</code></td>
                     <td>The widget loads all resources (scripts, <code>DataStore</code> and fonts) and then waits for your call. It will only generate the chart when you resume with<code>widgetObject.resume()</code>. This is convenient when you want to manipulate the DataStore <strong>before</strong> the chart is painted. This prevents painting twice.</td>
+                </tr>
+                <tr>
+                    <td><code>dashboard=master</code></td>
+                    <td>Widget is master. The widget catches for click events. You can listen with <code>widgetObject.on("click")</code> and master widgets activate interacitve items in slave widgets</td>
+                </tr>
+                <tr>
+                    <td><code>dashboard=slave</code></td>
+                    <td>Widgets is slave. The widget watches for click events in master widgets and actives interactive items.</td>
                 </tr>
             </tbody>
         </table>
@@ -283,11 +291,11 @@ if(LocalFocusAPI.oldBrowser()){
                 <tr>
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.on(<i>event</i>, <i>handler</i>)</h4>
-                        <p>Catch events that this widget emits. The event "loaded" is emitted when the widget finishes loading scripts, <code>DataStore</code> and fonts. "ready" is emitted when it finishes painting the chart.</p>
+                        <p>Catch events that this widget emits. The event "loaded" is emitted when the widget finishes loading scripts, <code>DataStore</code> and fonts. "ready" is emitted when it finishes painting the chart. "click" is emitted when a chart element is clicked by a user.</p>
                         <p><strong>Arguments</strong></p>
                         <ul>
-                            <li><i>event</i>: string. It can be "loaded" or "ready".</li>
-                            <li><i>handler</i>: function. The current <code>widgetObject</code> will be passed as <code>this</code></li>
+                            <li><i>event</i>: string. It can be &quot;loaded&quot;, &quot;ready&quot; or &quot;click&quot;.</li>
+                            <li><i>handler</i>: function. In the case of &quot;click&quot;, the clicked item will be passed as the first argument. In all cases, the current <code>widgetObject</code> will be passed as <code>this</code></li>
                         </ul>
                         <p><strong>Returns</strong></p>
                         <p>Current <code>widgetObject</code></p>
@@ -306,6 +314,11 @@ widgetObject.on(&#x27;loaded&#x27;,function(){
 // Wait for widget to be ready and activate "2015"
 widgetObject.on(&#x27;ready&#x27;,function(){
     this.activate(&#x22;2015&#x22;);
+});
+
+// Watch for user click events
+widgetObject.on(&#x27;click&#x27;,function(item){
+    console.log(item);
 });
                             </code>
                         </pre>
