@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style>
+			body, html {
+				margin: 0px;
+				padding: 0px;
+				font-family: sans-serif;
+				font-size: 10px;
+			}
+
+			#label {
+				margin-left: 10px;
+			}
+
+			#example-spinner {
+				width: 100%;
+				height: 450px;
+				position:absolute;
+				background-image: url('spinner.svg');
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: 4em;
+			}
+
+			#example {
+				opacity:0;
+				width:100%;
+				height:450px;
+				overflow:hidden;
+			}
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="../localfocusapi.js"></script>
+	</head>
+	<body>
+		<div id="buttons"></div>
+		<div id="example-spinner"></div>
+        <iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/58480a4825545?api=1&amp;noui=1"></iframe>        
+	
+		<script>            
+            var widget = LocalFocusAPI.select('#example').on('loaded', function(){
+            	// Wait for the widget to be loaded
+                console.info('widget loaded');
+                this.getDataStore(function(dataStore){
+                	console.info('dataStore loaded:', dataStore);
+                	// Get the interactive dimension
+                	var group = dataStore.groups[2];
+                	for (var i = 0; i < dataStore.items.length; i++) {
+                		var item = dataStore.items[i];
+                		if(group.key === item.group && item.active){
+                			// Item is an interactive item
+                			jQuery('<button/>').data('label', item.label).text(item.label).click(function(){
+								widget.activate($(this).data('label'));
+							}).appendTo('#buttons');
+                		}
+                	};
+                });
+            }).on('ready', function(){
+            	// Wait for the widget to be ready
+            	console.info('widget ready');
+                $('#example').animate({opacity: '1'});
+                $('#example-spinner').fadeOut();
+            });
+	    </script>
+	</body>
+</html>

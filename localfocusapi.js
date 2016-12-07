@@ -56,7 +56,7 @@ var LocalFocusAPI = (function(){
                     // Listen to loaded and ready events
                     if((request.action === 'loaded' || request.action === 'ready') && typeof onFunctions[request.action] === 'function'){
                         onFunctions[request.action].call(w);
-                        delete onFunctions[request.action];
+                        //delete onFunctions[request.action];
                     }
 
                     // Listen to click events
@@ -139,58 +139,6 @@ var LocalFocusAPI = (function(){
         }        
     };
 
-
-    var cachedLocation = null, geoData = [];
-
-    var requestLocation = function(settings){
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude,
-                lon = position.coords.longitude,
-                minDistance = Number.MAX_VALUE;
-                hideInfoBox();
-                forEach(geoData, function(){
-                    var a = Math.abs(this[1] - lat),
-                    b = Math.abs(this[0] - lon),
-                    distance = Math.sqrt(a*a+b*b);
-                    if(distance < minDistance){
-                        minDistance = distance;
-                        cachedLocation = this[2];
-                    }
-                });
-            }, function(){
-                hideInfoBox();
-                cachedLocation = false;
-            });
-        } else {
-            hideInfoBox();
-            cachedLocation = false;
-        }
-    }; 
-
-    var geoLocate = function(settings, callback, iteration){
-        if(typeof iteration === 'undefined'){
-            iteration = 0;
-        }
-        if(cachedLocation === false){
-            return;
-        }
-        if(cachedLocation === null) {
-            cachedLocation = true;
-            requestLocation(settings);
-        }
-        if(cachedLocation === true){
-            if(iteration < 30){
-                setTimeout(function(){
-                    iteration ++;
-                    geoLocate(settings, callback, iteration);
-                },1000);
-            }
-        } else if(typeof cachedLocation === 'number') {
-            callback(cachedLocation);
-        }
-    };
-
     var forEach = function(items, callback){
         if(!items || !callback){
             return;
@@ -200,18 +148,6 @@ var LocalFocusAPI = (function(){
             callback.call(item, item, i);
         };
     }
-
-    var hideInfoBox = function(){
-        if(infoBox){
-            if(infoBox.hasAttribute('data-slideup') && window.jQuery){
-                $(infoBox).slideUp();
-            } else {
-                infoBox.style.display = 'none';
-            }
-        }
-    };
-
-    var infoBox = null;
 
     return {
         oldBrowser: function(){
@@ -232,49 +168,6 @@ var LocalFocusAPI = (function(){
                     loop.call(new widgetObject(elem));
                 });
             }
-            return null;
-        },
-        geo: function(settings){
-            if(!settings || !settings.selector){
-                return;
-            }
-
-            var widgets = document.querySelectorAll(settings.selector);
-
-            if(widgets && settings['infoBox-place'] && settings['infoBox-node']){
-                var place = document.querySelector(settings['infoBox-place']);
-                if(place){
-                    infoBox = document.createElement(settings['infoBox-node']);
-                    if(settings['infoBox-class']){
-                        infoBox.setAttribute('class', settings['infoBox-class']);
-                    }
-                    if(settings['infoBox-text']){
-                        infoBox.innerText = settings['infoBox-text'];
-                    }
-                    if(settings['infoBox-html']){
-                        infoBox.innerHTML = settings['infoBox-html'];
-                    }
-                    if(settings['infoBox-slideUp'] === true){
-                        infoBox.setAttribute('data-slideup', 'true');
-                    }
-                    place.insertBefore(infoBox, place.firstChild);
-                }
-            }
-            
-            forEach(widgets, function(){
-                var o = new widgetObject(this).on('ready', function(){
-                    var widget = this;
-                    geoLocate(settings,function(location){
-                        widget.activate(location);
-                    })
-                });
-            });
-            return null;
-        },
-        loadGeo: function(data){
-            forEach(data, function(){
-                geoData.push(this);
-            });
             return null;
         }
     }

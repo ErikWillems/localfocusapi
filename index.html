@@ -8,7 +8,11 @@
 	<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="libs/highlight/styles/github.css">
-    
+
+    <script src="libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="libs/highlight/highlight.js"></script>
+
     <style>
     body {
         margin: 0px;
@@ -27,112 +31,165 @@
         font-family: 'Open Sans', sans-serif;
     }
 
+    h1 {
+        margin:70px 0px;
+    }
+
+    h1 > img {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+    }
+
+    h4 {
+        font-weight: 400;
+    }
+
+    iframe {
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+    }
+
     tr > td {
         width:50%;
     }
 
-    span.string {
-        color:red;
+    pre.load-code {
+        font-size: 10px;
+        overflow: auto;
+        max-height: 180px;
     }
-    span.function {
-        color:blue;
+
+    strong {
+        font-weight: 400;
     }
     </style>
 </head>
 <body>
     <div class="container" style="text-align:center">
-        <h1 style="margin:70px 0px"><img src="images/lf.png" style="width:32px;height:32px;margin-right:10px" /> LocalFocus Widget API</h1>
+        <h1><img src="lf.png" /> LocalFocus Widget API</h1>
         <h4>Interact with LocalFocus widgets on your site</h4>
-        <p>Build dashboards, change layouts, adjust maps and charts to user's geolocation. And more.</p>
+        <p>Listen, control, read, write and more</p>
         <br/>
         <a class="btn btn-default" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a>
         <a class="btn btn-default" href="https://github.com/ErikWillems/localfocusapi" target="_blank" role="button"><span class="glyphicon glyphicon-triangle-right"></span> Source on Github</a>
         <br/><br/>
         <p>Version 1.0</p>
         <br/><br/>
-        <p><small>Optional geolocation modules, to use with LocalFocusAPI.geo()</small></p>
-        <a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a>
     </div>
 
     <br/><br/>
     <div class="container">
 
-        
-        <h2 style="text-align:center">Working Demo's</h2><br/>
-        <div class="row">
-            <div class="col-md-3">
-                <h4>Simple interaction</h4>
-                <a href="examples/animals-dashboard.html" target="_blank"><img src="images/example6.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="col-md-3">
-                <h4>Advanced interaction</h4>
-                <a href="examples/simple-interaction.html" target="_blank"><img src="images/example1.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="col-md-3">
-                <h4>Custom dashboard</h4>
-                <a href="examples/advanced-interaction.html" target="_blank"><img src="images/example2.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="col-md-3">
-                <h4>Change style and settings</h4>
-                <a href="examples/change-style.html" target="_blank"><img src="images/example3.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-        </div>
-        <br/>
-         <div class="row">
-            <div class="col-md-3">
-                <h4>Newsmap Events</h4>
-                <a href="examples/newsmap-demo.html" target="_blank"><img src="images/example8.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="col-md-3">
-                <h4>Adapting to geolocation</h4>
-                <a href="examples/animals-geo.html" target="_blank"><img src="images/example7.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="col-md-3">
-                <h4>Adapting to geolocation (2)</h4>
-                <a href="examples/geomodule.html" target="_blank"><img src="images/example5.png" class="img-responsive img-thumbnail" /></a>
-            </div>
-        </div>
-        <br/><br/><br/><br/>
-
         <h2>Introduction</h2><br/>
-        <p>
-            All LocalFocus Widgets are iframes and can listen to commands you give. Internally this is done with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank">javascript postMessage</a>. However, this is not convenient for you to use. 
-            But localfocusapi.js makes things easier. Download it, include it in your page and get creative!
-        </p>
-        <p>This localfocusapi.js is work in progress. This script, code examples and documentation are licenced under <a href="licence.txt" target="_blank">MIT Licence</a>.</p>
-        <br/>
-        <p><strong>Getting started</strong></p>
-        <ul>
-            <li>Download the latest <a class="btn btn-default btn-xs" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a></li>
-            <li>Include the script in your webpage:
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Users can create visualisations with LocalFocus and place them on websites via an iframe. We call these visualisations <strong>widgets</strong>. The Widget API is an extra javascript layer for developers to do things with these widgets, like event handling, interacting and manipulating. The Widget API is not a full-blown library to create charts, but helps you to create extra functionalities to improve integration with your website.
+                </p>
+
+                <p>This script, code examples and documentation are licenced under <a href="licence.txt" target="_blank">MIT Licence</a>.</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Getting started</strong></p>
+                <p>Download the latest <a class="btn btn-default btn-xs" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a> and include the script in your webpage:</p>
                 <pre>
                     <code class="html">
 &#x3C;script src=&#x22;path-to-the-script/localfocusapi.js&#x22;&#x3E;&#x3C;/script&#x3E;
                     </code>
                 </pre>
-            </li>
-            <li>Append <code>?api=1</code> to the iframe links to force widgets to listen to commands:
+                <p>Append <code>?api=1</code> to the <strong>widget's</strong> links to force widgets to listen to commands:</p>
                 <pre>
                     <code class="html">
 &#x3C;iframe class=&#x22;localfocusvisual&#x22; scrolling=&#x22;no&#x22; frameborder=&#x22;0&#x22; style=&#x22;width:100%;height:550px;overflow:hidden&#x22; src=&#x22;https://localfocus2.appspot.com/551a9626918b3?api=1&#x22;&#x3E;&#x3C;/iframe&#x3E;
                     </code>
                 </pre>
-            </li>
-            <li>Start controling the widgets on that webpage.</li>
-        </ul>
-        <br/>
-        <p><strong>Old browsers</strong></p>
-        <p>
-            LocalFocus charts do not work in Internet Explorer 8 or lower. Charts are automatically replaced by a screenshot that is generated by a LocalFocus-server. When localfocusapi.js detects an older browser, all methods of <code>LocalFocusAPI</code> and <code>widgetObject</code> are replaced with empty placeholder functions, so it won't run into errors. 
-        </p>
-        <p>
-            Optionally, you can run <code>LocalFocusAPI.oldBrowser()</code> to check for an old browser before executing your code.
-        </p>
-        <br/>
-        <p><strong>Dashboards</strong></p>
-        <p>
-            You can use the API only on regular widgets and on Story Boards. Interacting with Dashboards and Newsmaps is not yet possible.
-        </p>
+            </div>
+        </div>
+        
+        <br/><br/><br/><br/>
+
+        <h2>1. Listen</h2>
+        <h4>Use case: create a loading spinner</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>A LocalFocus visualisation sends signals to your webpage about it's current state. This example listens to the &quot;ready&quot; signal with the widgetObject.on() function. It then hides the spinner and fades in the chart.</p>
+                <p>Tip: also try the &quot;loaded&quot; and &quot;click&quot; events</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example1">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example1.html"></iframe>
+            </div>
+        </div>
+
+        <h2>2. Control</h2>
+        <h4>Use case: create custom interaction buttons</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>LocalFocus visualisations can have interactive options. Use the widgetObject.activate() function to activate an item from the dropdown menu. Want to create your own interaction buttons? With the noui=1 parameter you can hide the chart's default dropdown menu.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example2">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example2.html"></iframe>
+
+            </div>
+        </div>
+        
+        <h2>3. Read dataStore</h2>
+        <h4>Use case: generate custom interaction buttons</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>In the previous example the &quot;apple and pear&quot;-buttons were hard-coded in the html. Now we generate interaction buttons with jQuery. We will read the widget's internal dataStore with widgetObject.getDataStore() and loop over the interactive items (in this case apples and pears) to create buttons.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example3">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example3.html"></iframe>
+
+            </div>
+        </div>
+
+        <h2>4. Write dataStore</h2>
+        <h4>Use case: change color scheme to match brand</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Sometimes you want to place the same widget on two sites, but the websites have different color schemes. Let's change the color scheme on one site.</p>
+                <p>What happended? We retrieved the widget's dataStore with widgetObject.getDataStore(), changed the main color scheme, and pushed the changes with widgetObject.setDataStore().</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example4">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example4.html"></iframe>
+            </div>
+        </div>
+        
+        <br/><br/>
+        <h2>5. Connect</h2>
+        <h4>Use case: create a simple dashboard</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Let's create a mini dashboard. You can force widgets to listen to each other with the dashboard=master and dashboard=slave parameters. A click on the map will select that municipality in the pie chart. A bonus: with the dashboard=master set you can catch click events. You could use this to change titles and texts or to create your own pop-ups.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example5">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example5.html"></iframe>
+            </div>
+        </div>
+
         <br/><br/><br/><br/>
 
         <h2>In depth</h2><br/>
@@ -216,47 +273,6 @@ LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
                     </td>
                 </tr>
 
-                <tr id="geo">
-                    <td>
-                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.geo(<i>settings</i>)</h4>
-                        <p>Adjust widgets to a user's geolocation. This function uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation" target="_blank">HTML5 Geolocation</a> to get coordinates and a LocalFocusAPI geo-module to convert these coordinates to locations. With the optional infoBox you can inform visitors about why they are asked for their geolocation.</p>
-                        <p>You must include one or more geo-modules before you can use this function.</p>
-                        <p><a class="btn btn-default btn-sm" href="geo/geo-nl.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> Municipalities The Netherlands</a></p>
-                        <p><strong>Arguments</strong></p>
-                        <ul>
-                            <li>
-                                <i>settings</i>: object. Containing one or more CSS selectors separated by commas. Properties:<br/>
-                                <ul>
-                                    <li><i>selector</i>: string. CSS selectors for selecting widgets that you want to geolocate.</li>
-                                    <li><i>infoBox-place</i>: string (optional).  The infobox will be placed inside this element as first child.</li>
-                                    <li><i>infoBox-node</i>: string (optional). Infobox node type.</li>
-                                    <li><i>infoBox-class</i>: string (optional). Infobox classes.</li>
-                                    <li><i>infoBox-text</i>: string (optional). Infobox text.</li>
-                                    <li><i>infoBox-html</i>: string (optional). Infobox html.</li>
-                                    <li><i>infoBox-slideUp</i>: boolean (optional). Use jQuery's slideUp to hide infoBox when geolocation is detected.</li>
-                                </ul>
-                            </li>
-                        </ul>
-                        
-                        <p><strong>Returns</strong></p>
-                        <p>Null</p>
-                    </td>
-                    <td>
-                        <pre>
-                            <code class="javascript">
-LocalFocusAPI.geo({
-    'selector': '.localfocusvisual',
-    'infoBox-place': '#main-article',
-    'infoBox-node': 'p',
-    'infoBox-class': 'alert alert-warning',
-    'infoBox-text': 'We ask for your location to adapt charts.',
-    'infoBox-slideUp': true
-});
-                            </code>
-                        </pre>
-                    </td>
-                </tr>
-
                 <tr>
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.oldBrowser()</h4>
@@ -291,7 +307,7 @@ if(LocalFocusAPI.oldBrowser()){
                 <tr>
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.on(<i>event</i>, <i>handler</i>)</h4>
-                        <p>Catch events that this widget emits. The event "loaded" is emitted when the widget finishes loading scripts, <code>DataStore</code> and fonts. "ready" is emitted when it finishes painting the chart. "click" is emitted when a chart element is clicked by a user.</p>
+                        <p>Catch events that this widget emits. The event "loaded" is emitted when the widget finishes loading scripts, <code>DataStore</code> and fonts. "ready" is emitted when it finishes painting the chart. "click" is emitted by widgets with the <code>dashboard=master</code> parameter when a chart element is clicked by a user.</p>
                         <p><strong>Arguments</strong></p>
                         <ul>
                             <li><i>event</i>: string. It can be &quot;loaded&quot;, &quot;ready&quot; or &quot;click&quot;.</li>
@@ -595,12 +611,22 @@ DataStore.styling.svg.style.root.fill = &#x22;#FFFFFF&#x22;;
         </table> 
     </div>
 
-    <script src="libs/jquery/jquery-1.11.2.min.js"></script>
-    <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-    <script src="libs/highlight/highlight.js"></script>
-    <script src="localfocusapi.js"></script>
     <script>
+        hljs.configure({
+            tabReplace: '  '
+        });
         hljs.initHighlightingOnLoad();
+
+
+        $('pre.load-code').each(function(){
+            var element = $(this);
+            var id = element.attr('data-id');
+            
+            $.get('examples/' + id + '.html', function(data) {
+                element.children('code').html(escapeHtml(data));
+                hljs.highlightBlock(element.children('code').get(0));
+            }, 'text');
+        });
 
         $('code').each(function(){
             var current = $(this);
@@ -610,6 +636,15 @@ DataStore.styling.svg.style.root.fill = &#x22;#FFFFFF&#x22;;
                 }).css('cursor','pointer').css('text-decoration','underline');
             }
         });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+         }
     </script>
 
 
