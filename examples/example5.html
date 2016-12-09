@@ -31,6 +31,14 @@
 				display: inline-block;
 				overflow: hidden;
 			}
+
+			button {
+				font-size: 1.2em;
+				border: 1px solid #777;
+				background-color: #DDD;
+				font-family: sans-serif;
+				font-weight: 300;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../localfocusapi.js"></script>
@@ -38,24 +46,23 @@
 	<body>
 		<h3>No selection</h3>
 		<div id="example-spinner"></div>
-        <iframe class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5848126851c08?api=1&amp;dashboard=master"></iframe>
-        <iframe class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/58481296c8bfb?api=1&amp;dashboard=slave&amp;noui=1"></iframe>        
-	
+		<iframe class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5848126851c08?api=1&amp;dashboard=master"></iframe>
+		<iframe class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/58481296c8bfb?api=1&amp;dashboard=slave&amp;noui=1"></iframe>
 		<script>
 			var countReady = 0;
 			LocalFocusAPI.selectAll('.localfocusvisual', function(){
 				this.on('ready', function(){
-	            	// Wait for the widget to be ready
-	            	if(countReady){
-	            		console.info('both widgets are ready');
-		                $('.localfocusvisual').animate({opacity: '1'});
-		                $('#example-spinner').fadeOut();
-	            	}
-	                countReady++;
-            	}).on('click', function(item){
-            		$('h3').text('Selected: ' + item.label);
-            	});
+					// Wait for the widget to be ready
+					if(countReady){
+						console.info('both widgets are ready');
+						$('.localfocusvisual').animate({opacity: '1'});
+						$('#example-spinner').fadeOut();
+					}
+					countReady++;
+				}).on('click', function(item){
+					$('h3').text('Selected: ' + item.label);
+				});
 			});
-	    </script>
+		</script>
 	</body>
 </html>

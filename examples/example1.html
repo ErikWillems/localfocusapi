@@ -30,6 +30,14 @@
 				height:450px;
 				overflow:hidden;
 			}
+
+			button {
+				font-size: 1.2em;
+				border: 1px solid #777;
+				background-color: #DDD;
+				font-family: sans-serif;
+				font-weight: 300;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../localfocusapi.js"></script>
@@ -37,30 +45,28 @@
 	<body>
 		<button id="example-button">Restart the demonstration</button><span id="label">(or click on an element)</span>
 		<div id="example-spinner"></div>
-        <iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1&amp;dashboard=master"></iframe>        
-	
+		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1&amp;dashboard=master"></iframe>
 		<script>            
-            LocalFocusAPI.select('#example').on('loaded', function(){
-            	// Wait for the widget to be loaded
-                console.info('widget loaded');
-            }).on('ready', function(){
-            	// Wait for the widget to be ready
-            	console.info('widget ready');
-                $('#example').animate({opacity: '1'});
-                $('#example-spinner').fadeOut();
-            }).on('click', function(item){
-            	// Wait for a user to click on an element in the widget
-            	console.info('click on element: ', item);
-            	$('#label').text('Clicked on: ' + item.label);
-            });
-
-            $('#example-button').click(function(){
-                $('#example-spinner').fadeIn();
-                $('#example').animate({opacity: '0'}, function(){
-                	// Trick to reload iframe
-                    $(this).attr('src',null).attr('src','https://localfocus2.appspot.com/5846cde78fdeb?api=1&dashboard=master');
-                });
-            });
-	    </script>
+			LocalFocusAPI.select('#example').on('loaded', function(){
+				// Wait for the widget to be loaded
+				console.info('widget loaded');
+			}).on('ready', function(){
+				// Wait for the widget to be ready
+				console.info('widget ready');
+				$('#example').animate({opacity: '1'});
+				$('#example-spinner').fadeOut();
+			}).on('click', function(item){
+				// Wait for a user to click on an element in the widget
+				console.info('click on element: ', item);
+				$('#label').text('Clicked on: ' + item.label);
+			});
+			$('#example-button').click(function(){
+				$('#example-spinner').fadeIn();
+				$('#example').animate({opacity: '0'}, function(){
+					// Trick to reload iframe
+					$(this).attr('src',null).attr('src','https://localfocus2.appspot.com/5846cde78fdeb?api=1&dashboard=master');
+				});
+			});
+		</script>
 	</body>
 </html>

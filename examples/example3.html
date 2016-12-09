@@ -30,6 +30,14 @@
 				height:450px;
 				overflow:hidden;
 			}
+
+			button {
+				font-size: 1.2em;
+				border: 1px solid #777;
+				background-color: #DDD;
+				font-family: sans-serif;
+				font-weight: 300;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../localfocusapi.js"></script>
@@ -37,32 +45,31 @@
 	<body>
 		<div id="buttons"></div>
 		<div id="example-spinner"></div>
-        <iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/58480a4825545?api=1&amp;noui=1"></iframe>        
-	
-		<script>            
-            var widget = LocalFocusAPI.select('#example').on('loaded', function(){
-            	// Wait for the widget to be loaded
-                console.info('widget loaded');
-                this.getDataStore(function(dataStore){
-                	console.info('dataStore loaded:', dataStore);
-                	// Get the interactive dimension
-                	var group = dataStore.groups[2];
-                	for (var i = 0; i < dataStore.items.length; i++) {
-                		var item = dataStore.items[i];
-                		if(group.key === item.group && item.active){
-                			// Item is an interactive item
-                			jQuery('<button/>').data('label', item.label).text(item.label).click(function(){
+		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/58480a4825545?api=1&amp;noui=1"></iframe>
+		<script>
+			var widget = LocalFocusAPI.select('#example').on('loaded', function(){
+				// Wait for the widget to be loaded
+				console.info('widget loaded');
+				this.getDataStore(function(dataStore){
+					console.info('dataStore loaded:', dataStore);
+					// Get the interactive dimension
+					var group = dataStore.groups[2];
+					for (var i = 0; i < dataStore.items.length; i++) {
+						var item = dataStore.items[i];
+						if(group.key === item.group && item.active){
+							// Item is an interactive item
+							jQuery('<button/>').data('label', item.label).text(item.label).click(function(){
 								widget.activate($(this).data('label'));
 							}).appendTo('#buttons');
-                		}
-                	};
-                });
-            }).on('ready', function(){
-            	// Wait for the widget to be ready
-            	console.info('widget ready');
-                $('#example').animate({opacity: '1'});
-                $('#example-spinner').fadeOut();
-            });
-	    </script>
+						}
+					};
+				});
+			}).on('ready', function(){
+				// Wait for the widget to be ready
+				console.info('widget ready');
+				$('#example').animate({opacity: '1'});
+				$('#example-spinner').fadeOut();
+			});
+		</script>
 	</body>
 </html>

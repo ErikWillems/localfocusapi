@@ -30,31 +30,37 @@
 				height:450px;
 				overflow:hidden;
 			}
+
+			button {
+				font-size: 1.2em;
+				border: 1px solid #777;
+				background-color: #DDD;
+				font-family: sans-serif;
+				font-weight: 300;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../localfocusapi.js"></script>
 	</head>
 	<body>
 		<div id="example-spinner"></div>
-        <iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1&amp;noui=1"></iframe>        
-	
-		<script>            
-            var widget = LocalFocusAPI.select('#example').on('loaded', function(){
-            	// Wait for the widget to be loaded
-                console.info('widget loaded');
-                this.getDataStore(function(dataStore){
-                	console.info('dataStore loaded:', dataStore);
-                	// Get the interactive dimension
-                	dataStore.styling.colors.standard = ['#324D5C','#46B29D','#F0CA4D','#DE5B49'];
-
-                	this.setDataStore(dataStore);
-                });
-            }).on('ready', function(){
-            	// Wait for the widget to be ready
-            	console.info('widget ready');
-                $('#example').animate({opacity: '1'});
-                $('#example-spinner').fadeOut();
-            });
-	    </script>
+		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1&amp;noui=1"></iframe>
+		<script>
+			var widget = LocalFocusAPI.select('#example').on('loaded', function(){
+				// Wait for the widget to be loaded
+				console.info('widget loaded');
+				this.getDataStore(function(dataStore){
+					console.info('dataStore loaded:', dataStore);
+					// Get the interactive dimension
+					dataStore.styling.colors.standard = ['#324D5C','#46B29D','#F0CA4D','#DE5B49'];
+					this.setDataStore(dataStore);
+				});
+			}).on('ready', function(){
+				// Wait for the widget to be ready
+				console.info('widget ready');
+				$('#example').animate({opacity: '1'});
+				$('#example-spinner').fadeOut();
+			});
+		</script>
 	</body>
 </html>
