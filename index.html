@@ -117,7 +117,7 @@
         <h4>Use case: create a loading spinner</h4>
         <div class="row">
             <div class="col-md-6">
-                <p>In this example demonstrates a loading spinner. Widgets send signals to your webpage about their current state. This example listens to the &quot;ready&quot; signal with the widgetObject.on() function. It then hides the spinner and fades in the chart.</p>
+                <p>This example demonstrates a loading spinner. Widgets send signals to your webpage about their current state. This example listens to the &quot;ready&quot; signal with the widgetObject.on() function. It then hides the spinner and fades in the chart.</p>
                 <p>Tip: also try the &quot;loaded&quot; and &quot;click&quot; events</p>
                 <strong>The code</strong>
                 <pre class="load-code" data-id="example1">
@@ -149,7 +149,8 @@
         <h4>Use case: generate custom interaction buttons</h4>
         <div class="row">
             <div class="col-md-6">
-                <p>In the previous example the &quot;apple and pear&quot;-buttons were hard-coded in the html. Now we generate interaction buttons with jQuery. We will read the widget's internal dataStore with widgetObject.getDataStore() and loop over the interactive items (in this case apples and pears) to create buttons.</p>
+                <p>In the previous example we hard-coded the "apple" and "pear" buttons. But what if you created a new widget that also includes "lemons"? It would not add an extra button.</p>
+                <p>In this example we will generate buttons according to the widget's "dataStore". We will retrieve the dataStore with widgetObject.getDataStore() and loop over the interactive items (in this example the provinces in The Netherlands) to create buttons.</p>
                 <strong>The code</strong>
                 <pre class="load-code" data-id="example3">
                     <code class="javascript"></code>
@@ -165,7 +166,7 @@
         <h4>Use case: change color scheme to match brand</h4>
         <div class="row">
             <div class="col-md-6">
-                <p>Sometimes you want to place the same widget on two sites, but the websites have different color schemes. In this example we changed the color scheme.</p>
+                <p>Sometimes you want to publish the same widget on two sites, but the websites have different color schemes. In this example we changed the color scheme.</p>
                 <p>How? We retrieved the widget's dataStore with widgetObject.getDataStore(), changed the main color scheme, and pushed the changes with widgetObject.setDataStore().</p>
                 <strong>The code</strong>
                 <pre class="load-code" data-id="example4">
