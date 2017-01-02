@@ -69,6 +69,11 @@ var LocalFocusAPI = (function(){
                         onFunctions.special.call(w, {'groups':d.groups,'items':d.items,'styling':d.styling,'settings':d.settings});
                         delete onFunctions.special;
                     }
+
+                    if(request.action === 'getImage' && typeof onFunctions['getImage'] === 'function'){
+                        onFunctions['getImage'].call(w, {'url': request.id});
+                        delete onFunctions['getImage'];
+                    }
                 };
                 window.addEventListener("message",listener,false);
             }
@@ -129,12 +134,19 @@ var LocalFocusAPI = (function(){
                 send({action:'setDataStore',dataStore: dataStore});
                 return this;
             };
+            this.getImage = function(format, callback){
+                onFunctions['getImage'] = callback;
+                send({action:'getImage', format: format});
+                listen();
+                return this;
+            };
         } else {
             this.on = noop;
             this.activate = noop;
             this.resume = noop;
             this.element = noop;
             this.getDataStore = noop;
+            this.getImage = noop;
             this.setDataStore = noop;
         }        
     };
