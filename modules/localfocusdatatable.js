@@ -9,10 +9,12 @@ var LocalFocusDataTable = (function(){
 				if(!start){
 					start = 0;
 				}
-				for (var i = start; i < items.length; i++) {
-					var item = items[i];
-					callback(item, i);
-				};
+				if(items && items.length){
+					for (var i = start; i < items.length; i++) {
+						var item = items[i];
+						callback(item, i);
+					};
+				}
 			};
 
 			var recordFinder = function(dataStore){
@@ -39,7 +41,9 @@ var LocalFocusDataTable = (function(){
 							return a-b;
 						});
 						var k = keys.join(',');
-						if(typeof dataStore.records[k] !== 'undefined'){
+						if(typeof dataStore.records[k] === 'undefined'){
+							return {'value': null};
+						} else {
 							return dataStore.records[k];
 						}
 						return null;
