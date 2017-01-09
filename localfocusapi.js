@@ -1,3 +1,8 @@
+/* LocalFocus API
+    Version: 1.1
+    Date: 09-01-2017
+    By Erik Willems (twitter: @ehwillems)
+*/
 
 var LocalFocusAPI = (function(){
     var oldBrowser = ((!window.SVGAngle && !document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.1")) || !document.addEventListener || !document.querySelectorAll);
