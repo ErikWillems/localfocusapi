@@ -279,6 +279,27 @@ LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
 
                 <tr>
                     <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.allowOrigin(<i>origin</i>)</h4>
+                        <p>When you use this function, LocalFocusAPI will only listen to widgets from allowed origins.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>origin</i>: string. An allowed origin.</li>
+                        </ul>
+                        
+                        <p><strong>Returns</strong></p>
+                        <p>Self</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+LocalFocusAPI.allowOrigin('https://localfocus2.appspot.com');
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.oldBrowser()</h4>
                         <p>Run to check for an old browser.</p>
                         <p><strong>Arguments</strong></p>
@@ -374,10 +395,12 @@ widgetObject.on(&#x27;loaded&#x27;,function(){
                 <tr>
                     <td>
                         <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.getDataStore(<i>handler</i>)</h4>
+                        <h4><span style="visibility: hidden" class="glyphicon glyphicon-tag"></span> widgetObject.getDataStore(<i>options</i>, <i>handler</i>)</h4>
                         <p>Get the <code>DataStore</code> from a widget.</p>
                         <p><strong>Arguments</strong></p>
                         <ul>
                             <li><i>handler</i>: function. The <code>DataStore</code> will be passed as the first argument.  The current <code>widgetObject</code> will be passed as <code>this</code></li>
+                            <li><i>options (optional)</i>: object. Set {'records': true} to include records.</li>
                         </ul>
                         <p><strong>Returns</strong></p>
                         <p>Current <code>widgetObject</code></p>
@@ -393,6 +416,11 @@ widgetObject.on(&#x27;loaded&#x27;,function(){
     // Get DataStore from this widget
     this.getDataStore(function(DataStore){
         // Show me the DataStore
+        console.log(DataStore);
+    });
+
+    this.getDataStore({records: true}, function(DataStore){
+        // Show me the DataStore, with records
         console.log(DataStore);
     });
 });
@@ -425,6 +453,37 @@ widgetObject.on(&#x27;loaded&#x27;,function(){
         // Change chart type to "pie"
         DataStore.settings.activeChart = "pie";
         this.setDataStore(DataStore);
+    });
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.getDownload(<i>format</i>, <i>callback</i>)</h4>
+                        <p>Get a link to a downloadable image or spreadsheet. This can only be used on widget that are loaded and ready.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>format</i>: string. Use 'png', 'pdf' or 'csv'</li>
+                            <li><i>callback</i>: function. An object will be passed as the first argument, with a hyperlink to the image or spreadsheet. The current <code>widgetObject</code> will be passed as <code>this</code></li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for widget to be ready 
+widgetObject.on(&#x27;ready&#x27;,function(){
+    // Generate a PNG image
+    this.getDownload('png', function(data){
+        // Show me the hyperlink
+        console.log(data.url);
     });
 });
                             </code>
