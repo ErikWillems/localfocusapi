@@ -1,3 +1,18 @@
+/*
+	## Usage: ##
+	- Create interactive table:
+
+	var settings = {
+		'thousand':'.', // Thousand seperator for table values
+		'comma': ',' // Decimal seperator for table values
+	};
+	var dataTable = LocalFocusDataTable.create(widgetObject, tableId, settings);
+
+	- Update interactive table:
+
+	dataTable.update();
+*/
+
 var LocalFocusDataTable = (function(){
 	return {
 		'create': function(widget, baseQuery, config){
