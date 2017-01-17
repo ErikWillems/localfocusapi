@@ -94,21 +94,21 @@ var LocalFocusDataTable = (function(){
 				if(typeof nStr !== 'number' && typeof nStr !== 'string'){
 					return '-';
 				}
-                if(typeof nStr !== 'number'){
-                    nStr = Number(nStr);
-                }
-                nStr = String(Number(nStr.toFixed(8)));
-                var x = nStr.split('.');
-                var thousand = (config.thousand)? config.thousand: '.';
-                var comma =  (config.comma)? config.comma: ',';
-                var x1 = x[0];
-                var x2 = x.length > 1 ? comma + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
-                while (rgx.test(x1)) {
-                    x1 = x1.replace(rgx, '$1' + thousand + '$2');
-                }
-                return x1 + x2;
-			}
+				if(typeof nStr !== 'number'){
+					nStr = Number(nStr);
+				}
+				nStr = String(Number(nStr.toFixed(8)));
+				var x = nStr.split('.');
+				var thousand = (config.thousand)? config.thousand: '.';
+				var comma =  (config.comma)? config.comma: ',';
+				var x1 = x[0];
+				var x2 = x.length > 1 ? comma + x[1] : '';
+				var rgx = /(\d+)(\d{3})/;
+				while (rgx.test(x1)) {
+					x1 = x1.replace(rgx, '$1' + thousand + '$2');
+				}
+				return x1 + x2;
+			};
 
 			return {
 				'update': function(){
