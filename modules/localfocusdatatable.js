@@ -1,14 +1,15 @@
 /*
 	## Usage: ##
-	- Create interactive table:
+	### Create interactive table:
 
 	var settings = {
 		'thousand':'.', // Thousand seperator for table values
 		'comma': ',' // Decimal seperator for table values
 	};
-	var dataTable = LocalFocusDataTable.create(widgetObject, tableId, settings);
+	var query = '#table'; // Element or string for querySelector
+	var dataTable = LocalFocusDataTable.create(widgetObject, query, settings);
 
-	- Update interactive table:
+	### Update interactive table:
 
 	dataTable.update();
 */
@@ -16,7 +17,12 @@
 var LocalFocusDataTable = (function(){
 	return {
 		'create': function(widget, baseQuery, config){
-			var tableElement = document.querySelector(baseQuery);
+			var tableElement;
+			if(typeof baseQuery === 'string'){
+				tableElement = document.querySelector(baseQuery);
+			} else {
+				tableElement = baseQuery;
+			}
 			if(!config){
 				config = {};
 			}
