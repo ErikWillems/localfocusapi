@@ -484,6 +484,8 @@ widgetObject.on(&#x27;ready&#x27;,function(){
     this.getDownload('png', function(data){
         // Show me the hyperlink
         console.log(data.url);
+        // Open link
+        window.open(data.url, '_blank');
     });
 });
                             </code>
