@@ -72,14 +72,22 @@ var LocalFocusDataTable = (function(){
 				};
 			};
 
-			var newCheckbox = function(item, label){
+			var newCheckbox = function(item){
 				var d = document,
+				colorSpan = d.createElement('span'),
 				label = d.createElement('label'),
 				span = d.createElement('span'),
 				checkbox = d.createElement('input');
+				if(item && typeof item.color === 'string'){
+					colorSpan.style['background-color'] = item.color;
+					colorSpan.setAttribute('class', 'datatable-color-span datatable-color-span-active');
+				} else {
+					colorSpan.setAttribute('class', 'datatable-color-span datatable-color-span-inactive');
+				}
 				span.innerText = item.label;
 				checkbox.type = 'checkbox';
 				checkbox.checked = item.active;
+				label.append(colorSpan);
 				label.append(checkbox);
 				label.append(span);
 				return {
