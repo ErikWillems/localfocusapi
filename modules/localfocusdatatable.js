@@ -194,8 +194,8 @@ var LocalFocusDataTable = (function(){
 					if(dataStore){
 						update(dataStore);
 					} else {
-						widget.getDataStore({'records': true}, function(dataStore){
-							update(dataStore);
+						widget.getDataStore({'records': true}, function(d){
+							update(d);
 						});
 					}
 				}
