@@ -1,16 +1,22 @@
 /*
-	## Usage: ##
-	### Create interactive table:
+	Methods:
 
+	// Create a dataTable
+	// Pass a widgetObject, element (or string for the querySelector) and settings (optional)
+	var table = LocalFocusDataTable.create(widgetObject, element, settings);
+
+	// Update dataTable
+	// Pass a dataStore with records (optional)
+	table.update(dataStore);
+
+
+	// Example
 	var settings = {
-		'thousand':'.', // Thousand seperator for table values
-		'comma': ',' // Decimal seperator for table values
+		thousand: ".", // Thousand seperator for table values
+		comma: "," // Decimal seperator for table values
 	};
-	var query = '#table'; // Element or string for querySelector
-	var dataTable = LocalFocusDataTable.create(widgetObject, query, settings);
-
-	### Update interactive table:
-
+	var element = document.querySelector("#table");
+	var dataTable = LocalFocusDataTable.create(widgetObject, element, settings);
 	dataTable.update();
 */
 
@@ -124,62 +130,74 @@ var LocalFocusDataTable = (function(){
 				return x1 + x2;
 			};
 
+			var update = function(dataStore){
+				if(!dataStore || !dataStore.groups || !dataStore.items || !dataStore.records){
+					window.console && console.error('Could not update dataTable. Parts are missing.');
+					return;
+				}
+				var groups = dataStore.groups,
+				items = dataStore.items,
+				horizontalGroup = groups[1],
+				legendGroup = groups[0];
+				// Reset table
+				tableElement.innerHTML = '<thead></thead><tbody></tbody>';
+				// Create header
+				var headerRow = document.createElement('tr'),
+				headerCol = document.createElement('th');
+				headerRow.append(headerCol);
+				each(items, 0, function(item){
+					if(item.group === horizontalGroup.key){
+						var newCol = document.createElement('th'),
+						checkbox = newCheckbox(item).click(function(){
+							widget.setDataStore({
+								'items': dataStore.items
+							});
+						});
+						newCol.append(checkbox.element());
+						headerRow.append(newCol);
+					}
+				});
+				tableElement.querySelector('thead').append(headerRow);
+
+				var finder = recordFinder(dataStore);
+				each(items, 0, function(item){
+					// Add legend rows
+					if(item.group === legendGroup.key){
+						var row = document.createElement('tr'),
+						col = document.createElement('td'),
+						checkbox = newCheckbox(item).click(function(){
+							widget.setDataStore({
+								'items': dataStore.items
+							});
+						});
+						col.append(checkbox.element());
+						row.append(col);
+						tableElement.querySelector('tbody').append(row);
+						// Now loop over horizontal items
+						each(items, 0, function(itemH){
+							if(itemH.active && itemH.group === horizontalGroup.key){
+								var newCol = document.createElement('td');
+								var record = finder.find(item, itemH);
+								newCol.innerText = transformNumber(record.value);
+								row.append(newCol);
+							}
+						});
+					}
+				});
+			};
+
 			return {
-				'update': function(){
+				'update': function(dataStore){
 					if(!tableElement){
 						return;
 					}
-					widget.getDataStore({'records': true}, function(dataStore){
-						var groups = dataStore.groups,
-						items = dataStore.items,
-						horizontalGroup = groups[1],
-						legendGroup = groups[0];
-						// Reset table
-						tableElement.innerHTML = '<thead></thead><tbody></tbody>';
-						// Create header
-						var headerRow = document.createElement('tr'),
-						headerCol = document.createElement('th');
-						headerRow.append(headerCol);
-						each(items, 0, function(item){
-							if(item.group === horizontalGroup.key){
-								var newCol = document.createElement('th'),
-								checkbox = newCheckbox(item).click(function(){
-									widget.setDataStore({
-										'items': dataStore.items
-									});
-								});
-								newCol.append(checkbox.element());
-								headerRow.append(newCol);
-							}
+					if(dataStore){
+						update(dataStore);
+					} else {
+						widget.getDataStore({'records': true}, function(dataStore){
+							update(dataStore);
 						});
-						tableElement.querySelector('thead').append(headerRow);
-
-						var finder = recordFinder(dataStore);
-						each(items, 0, function(item){
-							// Add legend rows
-							if(item.group === legendGroup.key){
-								var row = document.createElement('tr'),
-								col = document.createElement('td'),
-								checkbox = newCheckbox(item).click(function(){
-									widget.setDataStore({
-										'items': dataStore.items
-									});
-								});
-								col.append(checkbox.element());
-								row.append(col);
-								tableElement.querySelector('tbody').append(row);
-								// Now loop over horizontal items
-								each(items, 0, function(itemH){
-									if(itemH.active && itemH.group === horizontalGroup.key){
-										var newCol = document.createElement('td');
-										var record = finder.find(item, itemH);
-										newCol.innerText = transformNumber(record.value);
-										row.append(newCol);
-									}
-								});
-							}
-						});
-					});
+					}
 				}
 			};
 		}
