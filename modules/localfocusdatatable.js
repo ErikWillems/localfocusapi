@@ -175,7 +175,7 @@ var LocalFocusDataTable = (function(){
 						tableElement.querySelector('tbody').append(row);
 						// Now loop over horizontal items
 						each(items, 0, function(itemH){
-							if(itemH.active && itemH.group === horizontalGroup.key){
+							if(itemH.group === horizontalGroup.key){
 								var newCol = document.createElement('td');
 								var record = finder.find(item, itemH);
 								newCol.innerText = transformNumber(record.value);
