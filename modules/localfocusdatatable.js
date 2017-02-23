@@ -140,7 +140,12 @@ var LocalFocusDataTable = (function(){
 				horizontalGroup = groups[1],
 				legendGroup = groups[0];
 				// Reset table
-				tableElement.innerHTML = '<thead></thead><tbody></tbody>';
+				tableElement.innerHTML = '';
+				// Create thead and tbody
+				var thead = document.createElement('thead');
+				var tbody = document.createElement('tbody');
+				tableElement.appendChild(thead);
+				tableElement.appendChild(tbody);
 				// Create header
 				var headerRow = document.createElement('tr'),
 				headerCol = document.createElement('th');
