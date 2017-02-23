@@ -93,9 +93,9 @@ var LocalFocusDataTable = (function(){
 				span.innerText = item.label;
 				checkbox.type = 'checkbox';
 				checkbox.checked = item.active;
-				label.append(colorSpan);
-				label.append(checkbox);
-				label.append(span);
+				label.appendChild(colorSpan);
+				label.appendChild(checkbox);
+				label.appendChild(span);
 				return {
 					'click': function(callback){
 						checkbox.addEventListener('click', function(e) {
@@ -144,7 +144,7 @@ var LocalFocusDataTable = (function(){
 				// Create header
 				var headerRow = document.createElement('tr'),
 				headerCol = document.createElement('th');
-				headerRow.append(headerCol);
+				headerRow.appendChild(headerCol);
 				each(items, 0, function(item){
 					if(item.group === horizontalGroup.key){
 						var newCol = document.createElement('th'),
@@ -153,11 +153,11 @@ var LocalFocusDataTable = (function(){
 								'items': dataStore.items
 							});
 						});
-						newCol.append(checkbox.element());
-						headerRow.append(newCol);
+						newCol.appendChild(checkbox.element());
+						headerRow.appendChild(newCol);
 					}
 				});
-				tableElement.querySelector('thead').append(headerRow);
+				tableElement.querySelector('thead').appendChild(headerRow);
 
 				var finder = recordFinder(dataStore);
 				each(items, 0, function(item){
@@ -170,16 +170,16 @@ var LocalFocusDataTable = (function(){
 								'items': dataStore.items
 							});
 						});
-						col.append(checkbox.element());
-						row.append(col);
-						tableElement.querySelector('tbody').append(row);
+						col.appendChild(checkbox.element());
+						row.appendChild(col);
+						tableElement.querySelector('tbody').appendChild(row);
 						// Now loop over horizontal items
 						each(items, 0, function(itemH){
 							if(itemH.group === horizontalGroup.key){
 								var newCol = document.createElement('td');
 								var record = finder.find(item, itemH);
 								newCol.innerText = transformNumber(record.value);
-								row.append(newCol);
+								row.appendChild(newCol);
 							}
 						});
 					}
