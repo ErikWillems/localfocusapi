@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LocalFocus Thumbnail API</title>
+	<link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../assets/libs/highlight/styles/github.css">
+
+    <script src="../assets/libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/libs/highlight/highlight.js"></script>
+
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Open Sans', sans-serif;
+        color:#444;
+    }
+
+    h1,h2,h3,h4,h5,h6, .btn {
+        font-weight: 300;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    h1 {
+        margin:70px 0px;
+    }
+
+    h1 > img {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+    }
+
+    h4 {
+        font-weight: 400;
+    }
+
+    h4.light {
+        font-weight: 300;
+    }
+
+    iframe {
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    tr > td {
+        width:50%;
+    }
+
+    pre.load-code {
+        font-size: 10px;
+        overflow: auto;
+        max-height: 180px;
+    }
+
+    strong {
+        font-weight: 400;
+    }
+    </style>
+</head>
+<body>
+    <div class="container" style="text-align:center">
+        <h1><img src="../assets/images/lf.png" /> LocalFocus Thumbnail API</h1>
+        <h4 class="light">Generate thumbnails of graphs and maps</h4>
+        <br/><br/>
+        <p>Version 1.0</p>
+        <br/><br/>
+    </div>
+
+    <br/><br/>
+    <div class="container">
+
+        <h2>Introduction</h2><br/>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Do you want to automatically create thumbnails of LocalFocus charts and maps? This is the place to start!
+                </p>
+
+                <p>
+                    The LocalFocus Thumbnail API uses HTTP requests. The results are PNG images, with optional retina support. To use this API, you need an API key. <a href="https://www.localfocus.nl/en/contact/" target="_blank">Please request one here</a>.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br/>
+                <h4>Example</h4>
+                <p>
+                    Get a thumbnail of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this widget</a> that was created by go.localfocus.nl
+                </p>
+                <p>
+                    <code>curl -o image.png 'https://go.localfocus.nl/services/thumbnail/?api_key=YOUR_API_KEY&amp;code=5984327859a51&amp;width=500&amp;height=550&amp;scale=2'</code>
+                </p>
+                <br/>
+                <h3>In depth</h3>
+                <br/>
+                <h4>Endpoints</h4>
+                <p>
+                    Depending on the LocalFocus platform your editors use:
+                </p>
+                <p>
+                    <code>https://go.localfocus.nl/services/thumbnail/</code><br/>
+                    <code>https://platform.localfocus.nl/services/thumbnail/</code>
+                </p>
+                <br/>
+                <h4>Methods</h4>
+                <p>
+                    <code>GET</code> only
+                </p>
+                <br/>
+                <h4>Required parameters</h4>
+                <p>
+                    <code>code</code> string, a valid widget id that matches <code>/^[a-f0-9]{13}$/</code>, <i>example: 59842f0f2fc30</i><br/>
+                    <code>api_key</code> string, a valid API key that was given to you by LocalFocus
+                </p>
+                <br/>
+                <h4>Optional parameters</h4>
+                <p>
+                    <code>width</code> integer, min=300, max=1000, default=600<br/>
+                    <code>height</code> integer, min=300, max=1000, default=550<br/>
+                    <code>scale</code> integer, min=1, max=4, default=1, <i>use 2 for retina optimized thumbnails</i>
+                </p>
+                <br/>
+                <br/>
+            </div>
+
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LocalFocus Widget API</title>
+	<link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../assets/libs/highlight/styles/github.css">
+
+    <script src="../assets/libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/libs/highlight/highlight.js"></script>
+
+    <style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        font-weight: 300;
+        font-size: 15px;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 24px;
+        font-family: 'Open Sans', sans-serif;
+        color:#444;
+    }
+
+    h1,h2,h3,h4,h5,h6, .btn {
+        font-weight: 300;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    h1 {
+        margin:70px 0px;
+    }
+
+    h1 > img {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+    }
+
+    h4 {
+        font-weight: 400;
+    }
+
+    h4.light {
+        font-weight: 300;
+    }
+
+    iframe {
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    tr > td {
+        width:50%;
+    }
+
+    pre.load-code {
+        font-size: 10px;
+        overflow: auto;
+        max-height: 180px;
+    }
+
+    strong {
+        font-weight: 400;
+    }
+    </style>
+</head>
+<body>
+    <div class="container" style="text-align:center">
+        <h1><img src="../assets/images/lf.png" /> LocalFocus Widget API</h1>
+        <h4 class="light">Build on top of LocalFocus visualisations</h4>
+        <br/>
+        <a class="btn btn-default" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a>
+        <a class="btn btn-default" href="https://github.com/ErikWillems/localfocusapi" target="_blank" role="button"><span class="glyphicon glyphicon-triangle-right"></span> Source on Github</a>
+        <br/><br/>
+        <p>Version 1.1</p>
+        <br/><br/>
+    </div>
+
+    <br/><br/>
+    <div class="container">
+
+        <h2>Introduction</h2><br/>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Users can create visualisations with LocalFocus and embed them via iframes. At LocalFocus we call these iframes widgets. The Widget API is an extra javascript layer for developers to do things like event handling, interacting and manipulating. The Widget API is not a full-blown library to create charts, but helps you to create extra functionalities. 
+                </p>
+
+                <p>This script, code examples and documentation are licenced under <a href="../licence.txt" target="_blank">MIT Licence</a>.</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Getting started</strong></p>
+                <p>Download the latest <a class="btn btn-default btn-xs" href="localfocusapi.js" target="_blank" role="button"><span class="glyphicon glyphicon-download"></span> localfocusapi.js</a> and include the script in your webpage:</p>
+                <pre>
+                    <code class="html">
+&#x3C;script src=&#x22;path-to-the-script/localfocusapi.js&#x22;&#x3E;&#x3C;/script&#x3E;
+                    </code>
+                </pre>
+                <p>Append <code>?api=1</code> to the <strong>widget's</strong> links to force widgets to listen to commands:</p>
+                <pre>
+                    <code class="html">
+&#x3C;iframe class=&#x22;localfocusvisual&#x22; scrolling=&#x22;no&#x22; frameborder=&#x22;0&#x22; style=&#x22;width:100%;height:550px;overflow:hidden&#x22; src=&#x22;https://localfocus2.appspot.com/551a9626918b3?api=1&#x22;&#x3E;&#x3C;/iframe&#x3E;
+                    </code>
+                </pre>
+            </div>
+        </div>
+        
+        <br/><br/><br/><br/>
+
+        <h2>1. Listen</h2>
+        <h4>Use case: create a loading spinner</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>This example demonstrates a loading spinner. Widgets send signals to your webpage about their current state. This example listens to the &quot;ready&quot; signal with the widgetObject.on() function. It then hides the spinner and fades in the chart.</p>
+                <p>Tip: also try the &quot;loaded&quot; and &quot;click&quot; events</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example1">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example1.html"></iframe>
+            </div>
+        </div>
+
+        <h2>2. Control</h2>
+        <h4>Use case: create custom interaction buttons</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>LocalFocus visualisations can have interactive options. Use the widgetObject.activate() function to activate an item from the dropdown menu. Want to create your own interaction buttons? With the noui=1 parameter you can hide the chart's default dropdown menu.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example2">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example2.html"></iframe>
+
+            </div>
+        </div>
+        
+        <h2>3. Read dataStore</h2>
+        <h4>Use case: generate custom interaction buttons</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>In the previous example we hard-coded the "apple" and "pear" buttons. But what if you created a new widget that also includes "lemons"? It would not add an extra button.</p>
+                <p>In this example we will generate buttons according to the widget's "dataStore". We will retrieve the dataStore with widgetObject.getDataStore() and loop over the interactive items (in this example the provinces in The Netherlands) to create buttons.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example3">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example3.html"></iframe>
+
+            </div>
+        </div>
+
+        <h2>4. Write dataStore</h2>
+        <h4>Use case: change color scheme to match brand</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Sometimes you want to publish the same widget on two sites, but the websites have different color schemes. In this example we changed the color scheme.</p>
+                <p>How? We retrieved the widget's dataStore with widgetObject.getDataStore(), changed the main color scheme, and pushed the changes with widgetObject.setDataStore().</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example4">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example4.html"></iframe>
+            </div>
+        </div>
+        
+        <br/><br/>
+        <h2>5. Connect</h2>
+        <h4>Use case: create a simple dashboard</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Let's create a mini dashboard. You can force widgets to listen to each other with the dashboard=master and dashboard=slave parameters. A click on the map will select that municipality in the pie chart. A bonus: with the dashboard=master set you can catch click events. You could use this to change titles and texts or to create your own pop-ups.</p>
+                <strong>The code</strong>
+                <pre class="load-code" data-id="example5">
+                    <code class="javascript"></code>
+                </pre>
+            </div>
+            <div class="col-md-6">
+                <iframe frameborder="0" src="examples/example5.html"></iframe>
+            </div>
+        </div>
+
+        <br/><br/><br/><br/>
+
+        <h2>In depth</h2><br/>
+        <h3>Link parameters</h3>
+        <p>You can (and must) append parameters to the iframe links:</p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><code>api=1</code> <strong>(required! This activates the Widget API)</strong></td>
+                    <td>It forces the widget to listen to API commands.</td>
+                </tr>
+                <tr>
+                    <td><code>noui=1</code></td>
+                    <td>Disable the widget's default interaction panel. Now you can create your custom control panel.</td>
+                </tr>
+                <tr>
+                    <td><code>wait=1</code></td>
+                    <td>The widget loads all resources (scripts, <code>DataStore</code> and fonts) and then waits for your call. It will only generate the chart when you resume with<code>widgetObject.resume()</code>. This is convenient when you want to manipulate the DataStore <strong>before</strong> the chart is painted. This prevents painting twice.</td>
+                </tr>
+                <tr>
+                    <td><code>dashboard=master</code></td>
+                    <td>Widget is master. The widget catches click events. You can listen to these events with <code>widgetObject.on("click")</code>. Master widgets also activate interactive items in slave widgets.</td>
+                </tr>
+                <tr>
+                    <td><code>dashboard=slave</code></td>
+                    <td>Widgets is slave. The widget listens to click events in master widgets.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br/><br/><br/><br/>
+        <h3 id="LocalFocusAPI">The LocalFocusAPI Object</h3>
+        <p>With the <code>LocalFocusAPI</code> you can select iframes that contain LocalFocus widgets. It will return one or more <code>widgetObject</code>s.</p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.select(<i>selector</i>)</h4>
+                        <p>Select one widget that you want to control. Returns a convenient widgetObject.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>selector</i>: element or string. When string, it is a string containing one or more CSS selectors separated by commas. It returns only the first matched element wrapped with a new <code>widgetObject</code>.</li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>A new object <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Select first iframe and activate '2015'
+LocalFocusAPI.select('iframe').activate('2015');
+
+// Select by iframe element and activate '2015'
+var element = document.getElementById('#mywidget');
+LocalFocusAPI.select(element).activate('2015');
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.selectAll(<i>selector</i>,<i>handler</i>)</h4>
+                        <p>Select multiple widgets that you want to control.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>selector</i>: string. Containing one or more CSS selectors separated by commas.</li>
+                            <li><i>handler</i>: function. Each matched element is wrapped with a new <code>widgetObject</code> and is passed as <code>this</code></li>
+                        </ul>
+                        
+                        <p><strong>Returns</strong></p>
+                        <p>Null</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+LocalFocusAPI.selectAll(&#x27;.localfocusvisual&#x27;,function(){
+    this.activate(label);
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.allowOrigin(<i>origin</i>)</h4>
+                        <p>When you use this function, LocalFocusAPI will only listen to widgets from allowed origins.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>origin</i>: string. An allowed origin.</li>
+                        </ul>
+                        
+                        <p><strong>Returns</strong></p>
+                        <p>Self</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+LocalFocusAPI.allowOrigin('https://localfocus2.appspot.com');
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> LocalFocusAPI.oldBrowser()</h4>
+                        <p>Run to check for an old browser.</p>
+                        <p><strong>Arguments</strong></p>
+                        <p>None</p>
+                        
+                        <p><strong>Returns</strong></p>
+                        <p>Boolean. True when it is an old browser.</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+if(LocalFocusAPI.oldBrowser()){
+    // Do something to fall back on
+} else {
+    // Do something nice with the API
+}
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <br/><br/><br/><br/>
+        <h3 id="widgetObject">A widgetObject Object</h3>
+        <p>Commands specific widgets using the <code>widgetObject</code> object. <code>LocalFocusAPI</code> passes you these objects with its <code>select</code> and <code>selectAll</code> method.</p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.on(<i>event</i>, <i>handler</i>)</h4>
+                        <p>Catch events that this widget emits. The event "loaded" is emitted when the widget finishes loading scripts, <code>DataStore</code> and fonts. "ready" is emitted when it finishes painting the chart. "click" is emitted by widgets with the <code>dashboard=master</code> parameter when a chart element is clicked by a user.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>event</i>: string. It can be &quot;loaded&quot;, &quot;ready&quot; or &quot;click&quot;.</li>
+                            <li><i>handler</i>: function. In the case of &quot;click&quot;, the clicked item will be passed as the first argument. In all cases, the current <code>widgetObject</code> will be passed as <code>this</code></li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for a widget to be loaded and activate "2014"
+widgetObject.on(&#x27;loaded&#x27;,function(){
+    this.activate(&#x22;2014&#x22;);
+});
+
+// Wait for widget to be ready and activate "2015"
+widgetObject.on(&#x27;ready&#x27;,function(){
+    this.activate(&#x22;2015&#x22;);
+});
+
+// Watch for user click events
+widgetObject.on(&#x27;click&#x27;,function(item){
+    console.log(item);
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.activate(<i>label</i>)</h4>
+                        <p>Charts can have interactive features. This is a dropdown with a list of labels which users can select. To activate one of the labels using the API, use this method.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>label</i>: string. Must correspond with the label of the interactive feature, case-sensitive.</li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for a widget to be loaded and activate "2014"
+widgetObject.on(&#x27;loaded&#x27;,function(){
+    this.activate(&#x22;2014&#x22;);
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.getDataStore(<i>handler</i>)</h4>
+                        <h4><span style="visibility: hidden" class="glyphicon glyphicon-tag"></span> widgetObject.getDataStore(<i>options</i>, <i>handler</i>)</h4>
+                        <p>Get the <code>DataStore</code> from a widget.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>handler</i>: function. The <code>DataStore</code> will be passed as the first argument.  The current <code>widgetObject</code> will be passed as <code>this</code></li>
+                            <li><i>options (optional)</i>: object. Set {'records': true} to include records.</li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for widget to be loaded 
+widgetObject.on(&#x27;loaded&#x27;,function(){
+    // Get DataStore from this widget
+    this.getDataStore(function(DataStore){
+        // Show me the DataStore
+        console.log(DataStore);
+    });
+
+    this.getDataStore({records: true}, function(DataStore){
+        // Show me the DataStore, with records
+        console.log(DataStore);
+    });
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.setDataStore(<i>DataStore</i>)</h4>
+                        <p>Set the <code class="dataStore">DataStore</code> to a widget.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>DataStore</i>: object. This is the <code>DataStore</code> you recieved and manipulated from widgetObject.getDataStore().</li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for widget to be loaded 
+widgetObject.on(&#x27;loaded&#x27;,function(){
+    // Get DataStore from this widget
+    this.getDataStore(function(DataStore){
+        // Change chart type to "pie"
+        DataStore.settings.activeChart = "pie";
+        this.setDataStore(DataStore);
+    });
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.getDownload(<i>format</i>, <i>callback</i>)</h4>
+                        <p>Get a link to a downloadable image or spreadsheet. This can only be used on widget that are loaded and ready.</p>
+                        <p><strong>Arguments</strong></p>
+                        <ul>
+                            <li><i>format</i>: string. Use 'png', 'pdf' or 'csv'</li>
+                            <li><i>callback</i>: function. An object will be passed as the first argument, with a hyperlink to the image or spreadsheet. The current <code>widgetObject</code> will be passed as <code>this</code></li>
+                        </ul>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Wait for widget to be ready 
+widgetObject.on(&#x27;ready&#x27;,function(){
+    // Generate a PNG image
+    this.getDownload('png', function(data){
+        // Show me the hyperlink
+        console.log(data.url);
+        // Open link
+        window.open(data.url, '_blank');
+    });
+});
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.element()</h4>
+                        <p>Get the iframe element.</p>
+                        <p><strong>Arguments</strong></p>
+                        <p>None</p>
+                        <p><strong>Returns</strong></p>
+                        <p>iframe element</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Get the iframe element
+widgetObject.element();
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.wait()</h4>
+                        <p>Stop repainting the chart. This is usefull when you want to manipulate things without repainting the chart.</p>
+                        <p><strong>Arguments</strong></p>
+                        <p>None</p>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Stop repainting the chart
+widgetObject.wait();
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> widgetObject.resume()</h4>
+                        <p>Start repainting the chart.</p>
+                        <p><strong>Arguments</strong></p>
+                        <p>None</p>
+                        <p><strong>Returns</strong></p>
+                        <p>Current <code>widgetObject</code></p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get a widgetObject
+var widgetObject = LocalFocusAPI.select(&#x22;iframe&#x22;);
+
+// Start repainting the chart
+widgetObject.resume();
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <br/><br/><br/><br/>
+        <h3 id="DataStore">A DataStore Object</h3>
+        <p>Each widget has an internal <code>DataStore</code>. Widgets respond to changes in this DataStore. Use <code>widgetObject.getDataStore(<i>callback</i>)</code> and <code>widgetObject.setDataStore(<i>DataStore</i>)</code> to get and set DataStores.</p>
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-flag"></span> The DataStore can be complex and not all properties are usefull. This is just a short list of the most usefull properties, which are also safe for you to manipulate.</div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.groups</h4>
+                        <p>This is an array of objects. It represents the dataset dimensions.<p>
+                        <p>It is safe and sometimes usefull to change array order. The order defines how each dimension is used in a chart. For example, the first group (<code>DataStore.groups[0]</code>) is the legend in column charts and line charts.</p>
+
+                        <p><strong>Read-only properties:</strong></p>
+                        <p><code>group.key</code>: Number. The unique key for this group.</p>
+
+                        <p><strong>Writable properties:</strong></p>
+                        <p><code>group.label</code>: String. The label for this group.</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Change label of a dimension
+DataStore.groups[0].label = &#x22;Locations&#x22;;
+
+// Transpose (swap legend and horizontal axis)
+var tmp = DataStore.groups[0];
+DataStore.groups[0] = DataStore.groups[1];
+DataStore.groups[1] = tmp;
+
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.items</h4>
+                        <p>This is an array of objects. It represents the dataset items. Each item belongs to a group.</p>
+
+                        <p><strong>Read-only properties:</strong></p>
+                        <p><code>item.key</code>: Number. A unique key for this item.</p>
+                        <p><code>item.group</code>: Number. Item belongs to group when: <code>group.key</code> = <code>item.group</code>.</p>
+
+                        <p><strong>Writable properties:</strong></p>
+                        <p><code>item.label</code>: String. The label for this item.</p>
+                        <p><code>item.color</code>: String. A hexadecimal color.</p>
+                        <p><code>item.active</code>: Boolean. Activate or deactivate an item. Warning: do not activate items that where originally deactivated.</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Get all legend items
+var legendGroup = DataStore.groups[0];
+for (var i = 0; i &#x3C; DataStore.items.length; i++) {
+    var item = DataStore.items[i];
+    if(item.group === legendGroup.key &#x26;&#x26; item.active){
+        console.log(&#x27;Visible in the legend&#x27;, item.label);
+    }
+};
+
+// Change item color to grey
+DataStore.items[0].color = &#x22;#444&#x22;;
+
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.settings</h4>
+                        <p>This is an objects. It holds various settings.</p>
+
+                        <p><strong>Writable properties:</strong></p>
+                        <p><code>settings.activeChart</code>: String. The current chart type. Possible values: bar, column, stacked, line, pie, polygon, grid, map.</p>
+                        <p><code>settings.title</code>: String. Widget's title</p>
+                        <p><code>settings.description</code>: String. Widget's description</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Change chart type to "pie"
+DataStore.settings.activeChart = "pie";
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h4><span class="glyphicon glyphicon-tag"></span> DataStore.styling</h4>
+                        <p>This is an objects. It holds various styling settings.</p>
+
+                        <p><strong>Writable properties:</strong></p>
+                        <p>All properties are writable. Go and experiment :)</p>
+                    </td>
+                    <td>
+                        <pre>
+                            <code class="javascript">
+// Change background color
+DataStore.styling.svg.style.background.fill = &#x22;#FF6666&#x22;;
+// Change domain background color
+DataStore.styling.domain.style.fill = &#x22;#050202&#x22;;
+// Change general font color
+DataStore.styling.svg.style.root.fill = &#x22;#FFFFFF&#x22;;
+                            </code>
+                        </pre>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table> 
+    </div>
+
+    <script>
+        hljs.configure({
+            tabReplace: '  '
+        });
+        hljs.initHighlightingOnLoad();
+
+
+        $('pre.load-code').each(function(){
+            var element = $(this);
+            var id = element.attr('data-id');
+            
+            $.get('examples/' + id + '.html', function(data) {
+                element.children('code').html(escapeHtml(data));
+                hljs.highlightBlock(element.children('code').get(0));
+            }, 'text');
+        });
+
+        $('code').each(function(){
+            var current = $(this);
+            if(current.text() === 'DataStore' || current.text() === 'widgetObject' || current.text() === 'LocalFocusAPI'){
+                current.click(function(){
+                    location.hash = "#" + current.text();
+                }).css('cursor','pointer').css('text-decoration','underline');
+            }
+        });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+         }
+    </script>
+
+
+</body>
+</html>
