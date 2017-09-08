@@ -79,18 +79,18 @@
         <br/><br/>
     </div>
 
-    <br/><br/>
+    <br/>
     <div class="container">
 
         <h2>Introduction</h2><br/>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <p>
                     Do you want to automatically create thumbnails of LocalFocus charts and maps? This is the place to start!
                 </p>
 
                 <p>
-                    The LocalFocus Thumbnail API uses HTTP requests. The results are PNG images, with optional retina support. To use this API, you need an API key. <a href="https://www.localfocus.nl/en/contact/" target="_blank">Please request one here</a>.
+                    The LocalFocus Thumbnail API uses HTTP requests. The results are PNG images, with optional retina support. To use this API, you need an API key. <a href="https://www.localfocus.nl/en/contact/" target="_blank">Please request one here</a>. We encourage you to cache generated thumbnails, to reduce API calls.
                 </p>
             </div>
         </div>
@@ -99,7 +99,7 @@
                 <br/>
                 <h4>Example</h4>
                 <p>
-                    Get a thumbnail of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this widget</a> that was created by go.localfocus.nl
+                    Get a thumbnail of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> that was created by go.localfocus.nl
                 </p>
                 <p>
                     <code>curl -o image.png 'https://go.localfocus.nl/services/thumbnail/?api_key=YOUR_API_KEY&amp;code=5984327859a51&amp;width=500&amp;height=550&amp;scale=2'</code>
@@ -123,15 +123,15 @@
                 <br/>
                 <h4>Required GET parameters</h4>
                 <p>
-                    <span class="label label-primary">code</span> <span class="label label-default">string</span> Hyperlinks to charts and maps end with this code, and matches <code>/[a-f0-9]{13}$/</code>. Example: the code of <code>https://localfocus2.appspot.com/5984327859a51</code> is <code>5984327859a51</code><br/>
-                    <span class="label label-primary">api_key</span> <span class="label label-default">string</span> A valid API key that was given to you by LocalFocus
+                    <span class="label label-primary">api_key</span> <span class="label label-default">string</span> A valid API key that was given to you by LocalFocus<br/>
+                    <span class="label label-primary">code</span> <span class="label label-default">string</span> Hyperlinks to charts and maps end with this code, and matches <code>/[a-f0-9]{13}$/</code>.<br/>Example: the code of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> (https://localfocus2.appspot.com/5984327859a51) is <code>5984327859a51</code>
                 </p>
                 <br/>
                 <h4>Optional GET parameters</h4>
                 <p>
-                    <span class="label label-primary">width</span> <span class="label label-default">integer</span> Min=300, max=1000, default=600<br/>
-                    <span class="label label-primary">height</span> <span class="label label-default">integer</span> Min=300, max=1000, default=550<br/>
-                    <span class="label label-primary">scale</span> <span class="label label-default">integer</span> Min=1, max=4, default=1, <i>use 2 for retina optimized thumbnails</i>
+                    <span class="label label-primary">width</span> <span class="label label-default">integer</span> Min: 300, max: 1000, default: 600<br/>
+                    <span class="label label-primary">height</span> <span class="label label-default">integer</span> Min: 300, max: 1000, default: 550<br/>
+                    <span class="label label-primary">scale</span> <span class="label label-default">integer</span> Min: 1, max: 4, default: 1, <i>use 2 for retina optimized thumbnails</i>
                 </p>
                 <br/>
                 <br/>
