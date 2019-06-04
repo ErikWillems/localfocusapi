@@ -105,6 +105,14 @@
                     <code>curl 'https://go.localfocus.nl/services/meta/?api_key=YOUR_API_KEY&amp;code=5984327859a51'</code>
                 </p>
                 <br/>
+
+                <h4>Response</h4>
+                <pre>
+                    <code class="json">
+{"title":"Lorem ipsum dolor sit amet","description":"Quisque placerat felis quis elementum varius. Nunc dictum ante quis mattis consequat.","source":"Ut egestas mauris","sourcelink":null}
+                    </code>
+                </pre>
+                <br/>
                 <h3>In depth</h3>
                 <br/>
                 <h4>Endpoints</h4>
@@ -127,11 +135,31 @@
                     <span class="label label-primary">code</span> <span class="label label-default">string</span> Hyperlinks to charts and maps end with this code, and matches <code>/[a-f0-9]{13}$/</code>.<br/>Example: the code of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> (https://localfocus2.appspot.com/5984327859a51) is <code>5984327859a51</code>
                 </p>
                 <br/>
+                <h4>Response</h4>
+                <p>
+                    A JSON object with the following properties:<br/>
+                    <span class="label label-primary">title</span> <span class="label label-default">string or null</span> The title or <code>null</code> if not set<br/>
+                    <span class="label label-primary">description</span> <span class="label label-default">string or null</span> The description or <code>null</code> if not set<br/>
+                    <span class="label label-primary">source</span> <span class="label label-default">string or null</span> The source of the data or <code>null</code> if not set<br/>
+                    <span class="label label-primary">sourcelink</span> <span class="label label-default">string or null</span> The hyperlink to the source of the data or <code>null</code> if not set<br/>
+                </p>
+                <br/>
                 <br/>
             </div>
 
             
         </div>
     </div>
+
+    <script>
+        hljs.configure({
+            tabReplace: '  '
+        });
+        hljs.initHighlightingOnLoad();
+
+
+       
+    </script>
+
 </body>
 </html>
