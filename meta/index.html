@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LocalFocus Thumbnail API</title>
+    <title>LocalFocus Meta API</title>
 	<link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../assets/libs/highlight/styles/github.css">
@@ -72,8 +72,8 @@
 </head>
 <body>
     <div class="container" style="text-align:center">
-        <h1><img src="../assets/images/lf.png" /> LocalFocus Thumbnail API</h1>
-        <h4 class="light">Generate thumbnails of graphs and maps</h4>
+        <h1><img src="../assets/images/lf.png" /> LocalFocus Meta API</h1>
+        <h4 class="light">Get titles, descriptions and sources of charts and maps</h4>
         <br/><br/>
         <p>Version 1.0</p>
         <br/><br/>
@@ -86,11 +86,11 @@
         <div class="row">
             <div class="col-md-8">
                 <p>
-                    Do you want to automatically create thumbnails of LocalFocus charts and maps? This is the place to start!
+                    Do you want to get meta data (eg titles, descriptions and sources) of LocalFocus charts and maps? This is the place to start!
                 </p>
 
                 <p>
-                    The LocalFocus Thumbnail API uses HTTP requests. The results are PNG images, with optional retina support. To use this API, you need an API key. <a href="https://www.localfocus.nl/en/contact/" target="_blank">Please request one here</a>. We encourage you to cache generated thumbnails, to reduce API calls.
+                    The LocalFocus Meta API uses HTTP requests. The results are JSON objects. To use this API, you need an API key. <a href="https://www.localfocus.nl/en/contact/" target="_blank">Please request one here</a>. We encourage you to cache generated results, to reduce API calls.
                 </p>
             </div>
         </div>
@@ -99,10 +99,10 @@
                 <br/>
                 <h4>Example</h4>
                 <p>
-                    Get a thumbnail of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> that was created with go.localfocus.nl
+                    Get meta data of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> that was created with go.localfocus.nl
                 </p>
                 <p>
-                    <code>curl -o image.png 'https://go.localfocus.nl/services/thumbnail/?api_key=YOUR_API_KEY&amp;code=5984327859a51&amp;width=500&amp;height=550&amp;scale=2'</code>
+                    <code>curl 'https://go.localfocus.nl/services/meta/?api_key=YOUR_API_KEY&amp;code=5984327859a51'</code>
                 </p>
                 <br/>
                 <h3>In depth</h3>
@@ -112,8 +112,8 @@
                     Depending on the LocalFocus platform your editors use:
                 </p>
                 <p>
-                    <code>https://go.localfocus.nl/services/thumbnail/</code><br/>
-                    <code>https://platform.localfocus.nl/services/thumbnail/</code>
+                    <code>https://go.localfocus.nl/services/meta/</code><br/>
+                    <code>https://platform.localfocus.nl/services/meta/</code>
                 </p>
                 <br/>
                 <h4>Method</h4>
@@ -125,13 +125,6 @@
                 <p>
                     <span class="label label-primary">api_key</span> <span class="label label-default">string</span> A valid API key that was given to you by LocalFocus<br/>
                     <span class="label label-primary">code</span> <span class="label label-default">string</span> Hyperlinks to charts and maps end with this code, and matches <code>/[a-f0-9]{13}$/</code>.<br/>Example: the code of <a href="https://localfocus2.appspot.com/5984327859a51" target="_blank">this chart</a> (https://localfocus2.appspot.com/5984327859a51) is <code>5984327859a51</code>
-                </p>
-                <br/>
-                <h4>Optional GET parameters</h4>
-                <p>
-                    <span class="label label-primary">width</span> <span class="label label-default">integer</span> Min: 300, max: 1000, default: 600<br/>
-                    <span class="label label-primary">height</span> <span class="label label-default">integer</span> Min: 300, max: 1000, default: 550<br/>
-                    <span class="label label-primary">scale</span> <span class="label label-default">integer</span> Min: 1, max: 4, default: 1, <i>use 2 for retina optimized thumbnails</i>
                 </p>
                 <br/>
                 <br/>
