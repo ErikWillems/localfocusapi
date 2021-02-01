@@ -47,12 +47,8 @@
 		<div id="example-spinner"></div>
 		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846e75a955c2?api=1"></iframe>
 		<script>
-			var widget = LocalFocusAPI.select('#example').on('loaded', function(){
-				// Wait for the widget to be loaded
-				console.info('widget loaded');
-			}).on('ready', function(){
+			var widget = LocalFocusAPI.select('#example').on('ready', function(){
 				// Wait for the widget to be ready
-				console.info('widget ready');
 				$('#example').animate({opacity: '1'});
 				$('#example-spinner').fadeOut();
 			});

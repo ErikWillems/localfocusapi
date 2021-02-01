@@ -43,28 +43,20 @@
 		<script src="../localfocusapi.js"></script>
 	</head>
 	<body>
-		<button id="example-button">Restart the demonstration</button><span id="label">(or click on an element)</span>
+		<button id="example-button">Reload chart</button>
 		<div id="example-spinner"></div>
-		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1&amp;dashboard=master"></iframe>
+		<iframe id="example" class="localfocusvisual" frameborder="0" src="https://localfocus2.appspot.com/5846cde78fdeb?api=1"></iframe>
 		<script>            
-			LocalFocusAPI.select('#example').on('loaded', function(){
-				// Wait for the widget to be loaded
-				console.info('widget loaded');
-			}).on('ready', function(){
+			LocalFocusAPI.select('#example').on('ready', function(){
 				// Wait for the widget to be ready
-				console.info('widget ready');
 				$('#example').animate({opacity: '1'});
 				$('#example-spinner').fadeOut();
-			}).on('click', function(item){
-				// Wait for a user to click on an element in the widget
-				console.info('click on element: ', item);
-				$('#label').text('Clicked on: ' + item.label);
 			});
 			$('#example-button').click(function(){
 				$('#example-spinner').fadeIn();
 				$('#example').animate({opacity: '0'}, function(){
 					// Trick to reload iframe
-					$(this).attr('src',null).attr('src','https://localfocus2.appspot.com/5846cde78fdeb?api=1&dashboard=master');
+					$(this).attr('src',null).attr('src','https://localfocus2.appspot.com/5846cde78fdeb?api=1');
 				});
 			});
 		</script>
